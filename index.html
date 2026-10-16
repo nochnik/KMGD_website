@@ -34,7 +34,7 @@
 
   --wrap:1280px;
   --gut:clamp(16px, 4vw, 48px);
-  --sec:clamp(72px, 9vw, 128px);
+  --sec:clamp(56px, 6.5vw, 96px);
   --r:16px;
   --ease:cubic-bezier(.16,1,.3,1);
   --z-hdr:50; --z-drawer:49; --z-panel:60;
@@ -56,8 +56,7 @@ button{font:inherit; color:inherit; background:none; border:0; padding:0; cursor
 .h1{font:600 clamp(38px, 4.5vw, 66px)/1.05 var(--f-display); letter-spacing:-.035em; margin:0; text-wrap:balance}
 .h2{font:600 clamp(32px, 3.4vw, 50px)/1.06 var(--f-display); letter-spacing:-.03em; margin:0; text-wrap:balance}
 .h3{font:600 21px/1.25 var(--f-display); letter-spacing:-.015em; margin:0}
-.eyebrow{display:flex; align-items:center; gap:10px; font:600 15px/1.2 var(--f-body); color:var(--blue); margin:0 0 18px}
-.eyebrow::before{content:""; flex-shrink:0; width:9px; height:13px; background:currentColor; clip-path:path("M4.5 0C4.5 0 9 5.6 9 8.5A4.5 4.5 0 0 1 0 8.5C0 5.6 4.5 0 4.5 0Z")}
+.eyebrow{font:600 15px/1.2 var(--f-body); color:var(--blue); margin:0 0 16px}
 .lead{font:500 clamp(20px, 1.8vw, 25px)/1.42 var(--f-display); letter-spacing:-.015em; margin:0}
 .muted{color:var(--muted)}
 .link{display:inline-flex; align-items:center; gap:10px; font:600 16px/1 var(--f-body); color:var(--blue); padding:8px 0; border-bottom:1.5px solid currentColor}
@@ -123,12 +122,12 @@ button{font:inherit; color:inherit; background:none; border:0; padding:0; cursor
 
 /* ── Первый экран ── */
 .hero{background:var(--blue); color:#fff; position:relative; overflow:hidden; isolation:isolate}
-.hero__grid{display:grid; grid-template-columns:1.2fr .8fr; align-items:center; gap:24px; min-height:min(700px, calc(100vh - 84px - 112px)); padding-top:56px; padding-bottom:40px}
+.hero__grid{display:grid; grid-template-columns:1.2fr .8fr; align-items:center; gap:24px; min-height:min(600px, calc(100vh - 84px - 112px)); padding-top:48px; padding-bottom:32px}
 .hero .eyebrow{color:rgba(255,255,255,.8)}
 .hero__lead{font:400 clamp(18px, 1.45vw, 21px)/1.55 var(--f-body); color:rgba(255,255,255,.88); max-width:580px; margin:28px 0 40px}
 .hero__cta{display:flex; flex-wrap:wrap; gap:12px}
-.hero__map{position:relative; align-self:stretch; display:flex; align-items:center; justify-content:center; min-height:420px}
-.hero__map svg{width:100%; height:auto; max-height:700px; overflow:visible}
+.hero__map{position:relative; align-self:stretch; display:flex; align-items:center; justify-content:center; min-height:380px}
+.hero__map svg{width:100%; height:auto; max-height:560px; overflow:visible}
 .iso path{fill:#fff; fill-opacity:.028; stroke:#fff}
 .iso text{font:500 13px var(--f-body); font-variant-numeric:tabular-nums; fill:rgba(255,255,255,.88); paint-order:stroke; stroke:var(--blue); stroke-width:5px}
 .iso .well{fill:var(--gold)}
@@ -146,45 +145,36 @@ button{font:inherit; color:inherit; background:none; border:0; padding:0; cursor
 .sec--cloud{background:var(--cloud)}
 .sec--blue{background:var(--blue); color:#fff}
 .sec--blue .eyebrow{color:rgba(255,255,255,.8)}
-.sec__head{display:flex; justify-content:space-between; align-items:end; gap:32px; margin-bottom:56px}
+.sec__head{display:flex; justify-content:space-between; align-items:end; gap:32px; margin-bottom:40px}
 .sec__lead{max-width:560px; margin:16px 0 0; color:var(--muted)}
 
-/* О компании */
-.about{display:grid; grid-template-columns:1fr 1.6fr; gap:clamp(32px, 6vw, 96px)}
+/* О компании: текст слева, путь компании справа */
+.about{display:grid; grid-template-columns:1.25fr 1fr; gap:clamp(32px, 6vw, 96px); align-items:start}
+.about__text .h2{margin-bottom:24px}
 .about__text p{margin:0 0 20px}
-.about__text .lead{margin-bottom:28px; color:var(--ink)}
-.about__text .muted{max-width:680px}
-
-.path{margin-top:clamp(64px, 8vw, 112px)}
-.path__list{list-style:none; margin:40px 0 0; padding:0; display:grid; grid-template-columns:repeat(4, 1fr); position:relative}
-.path__list::before{content:""; position:absolute; left:0; right:0; top:11px; height:1px; background:var(--line)}
-.path__step{position:relative; padding:44px 28px 0 0}
-.path__step::before{content:""; position:absolute; left:0; top:4px; width:15px; height:15px; border-radius:50%; background:#fff; border:2px solid var(--blue)}
-.path__step--now::before{background:var(--blue); box-shadow:0 0 0 6px rgba(1,51,173,.14)}
-.path__year{font:600 36px/1 var(--f-display); letter-spacing:-.03em; color:var(--blue); margin:0 0 14px}
-.path__text{margin:0; font-size:16px; color:var(--muted); max-width:270px}
-
-.prio{margin-top:clamp(64px, 8vw, 104px); display:grid; grid-template-columns:1fr 1.6fr; gap:clamp(32px, 6vw, 96px); padding-top:48px; border-top:1px solid var(--line)}
-.prio__title{font-size:clamp(26px, 2.6vw, 36px)}
-.prio__lead{margin:16px 0 28px; max-width:360px}
-.prio__list{list-style:none; margin:0; padding:0}
-.prio__list li{display:grid; grid-template-columns:1fr auto; gap:24px; align-items:baseline; padding:20px 0; border-bottom:1px solid var(--line); font:500 clamp(18px, 1.6vw, 22px)/1.35 var(--f-display); letter-spacing:-.015em}
-.prio__list b{font-weight:inherit}
-.prio__list span{font:500 14px/1 var(--f-body); color:var(--muted); letter-spacing:0}
+.about__text .lead{color:var(--ink)}
+.path{background:var(--cloud); border-radius:var(--r); padding:30px 32px 10px}
+.path__list{list-style:none; margin:20px 0 0; padding:0; position:relative}
+.path__list::before{content:""; position:absolute; left:6px; top:10px; bottom:34px; width:1px; background:var(--line)}
+.path__step{position:relative; display:grid; grid-template-columns:96px 1fr; gap:4px 16px; padding:0 0 22px 30px}
+.path__step::before{content:""; position:absolute; left:0; top:5px; width:13px; height:13px; border-radius:50%; background:var(--cloud); border:2px solid var(--blue)}
+.path__step--now::before{background:var(--blue); box-shadow:0 0 0 5px rgba(1,51,173,.14)}
+.path__year{font:600 22px/1.1 var(--f-display); letter-spacing:-.02em; color:var(--blue); margin:0}
+.path__text{margin:0; font-size:15px; line-height:1.5; color:var(--muted)}
 
 /* Направления */
 .dirs{display:grid; grid-template-columns:repeat(4, 1fr); gap:20px}
-.dir{background:#fff; border-radius:var(--r); padding:30px 28px 18px; display:flex; flex-direction:column}
-.dir__mark{width:40px; height:40px; margin-bottom:28px}
-.dir .h3{min-height:2.5em; margin-bottom:18px}
+.dir{background:#fff; border-radius:var(--r); padding:24px 24px 10px; display:flex; flex-direction:column}
+.dir__mark{width:34px; height:34px; margin-bottom:16px}
+.dir .h3{min-height:2.5em; margin-bottom:10px; font-size:19px}
 .dir ul{list-style:none; margin:0; padding:0}
-.dir li{padding:14px 0; border-top:1px solid var(--line); font-size:16px; line-height:1.45}
-.dirs__foot{margin-top:40px; display:flex; gap:32px; flex-wrap:wrap}
+.dir li{padding:11px 0; border-top:1px solid var(--line); font-size:15px; line-height:1.42}
+.dirs__foot{margin-top:28px; display:flex; gap:32px; flex-wrap:wrap}
 
 /* ── Проекты: геологический разрез ──
    Сверху — производство, ниже — управление, в основании — фундамент данных.
    Пунктирные «скважины» показывают, что каждый продукт берёт данные из общего фундамента. */
-.xs{display:grid; grid-template-columns:1fr 380px; gap:24px; align-items:stretch}
+.xs{display:grid; grid-template-columns:1fr 360px; gap:20px; align-items:start}
 .xs__map{position:relative; border-radius:var(--r); overflow:hidden; border:1px solid var(--line)}
 .xs__wells{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1}
 .xs__wells path{fill:none; stroke:var(--blue); stroke-width:1.5; stroke-dasharray:3 6; opacity:.22; animation:flow 1.4s linear infinite; transition:opacity .3s, stroke .3s, stroke-width .3s}
@@ -193,9 +183,9 @@ button{font:inherit; color:inherit; background:none; border:0; padding:0; cursor
 .xs__wells circle.is-on{opacity:1}
 .xs__wells circle.is-on{fill:var(--gold); stroke:var(--gold)}
 @keyframes flow{to{stroke-dashoffset:-18}}
-.xs__layer{position:relative; display:grid; grid-template-columns:200px 1fr; gap:24px; align-items:center; padding:46px 28px 40px; min-height:170px}
+.xs__layer{position:relative; display:grid; grid-template-columns:200px 1fr; gap:24px; align-items:center; padding:34px 28px 28px; min-height:0}
 .xs__horizon{position:absolute; left:0; right:0; top:-17px; width:100%; height:18px; z-index:0}
-.xs__layer--prod{background-color:#F6F5F1; background-image:radial-gradient(rgba(1,51,173,.13) 1px, transparent 1.5px); background-size:16px 16px; padding-top:40px}
+.xs__layer--prod{background-color:#F6F5F1; background-image:radial-gradient(rgba(1,51,173,.13) 1px, transparent 1.5px); background-size:16px 16px; padding-top:28px}
 .xs__layer--mgmt{background-color:var(--blue-soft); background-image:repeating-linear-gradient(0deg, transparent 0 15px, rgba(1,51,173,.08) 15px 16px)}
 .xs__layer--data{background-color:var(--blue); color:#fff; background-image:repeating-linear-gradient(135deg, rgba(255,255,255,.07) 0 1px, transparent 1px 13px)}
 .xs__layer--mgmt .xs__horizon path{fill:var(--blue-soft); stroke:rgba(1,51,173,.35)}
@@ -217,7 +207,7 @@ button{font:inherit; color:inherit; background:none; border:0; padding:0; cursor
 .xs__hint{display:flex; align-items:center; gap:10px; margin:14px 0 0; font-size:14px; color:var(--muted)}
 .xs__hint i{flex-shrink:0; width:28px; border-top:2px dashed var(--blue); opacity:.6}
 
-.xs__card{position:sticky; top:108px; align-self:start; background:var(--navy); color:#fff; border-radius:var(--r); padding:30px 30px 28px; min-height:420px; display:flex; flex-direction:column}
+.xs__card{position:sticky; top:108px; align-self:stretch; background:var(--navy); color:#fff; border-radius:var(--r); padding:28px 28px 26px; min-height:0; display:flex; flex-direction:column}
 .xs__level{display:inline-flex; align-self:flex-start; align-items:center; gap:8px; min-height:30px; padding:0 12px; border-radius:999px; background:rgba(255,255,255,.1); font:500 14px/1.2 var(--f-body); color:rgba(255,255,255,.88)}
 .xs__level::before{content:""; flex-shrink:0; width:8px; height:8px; border-radius:50%; background:var(--gold)}
 .xs__pname{font:600 clamp(30px, 2.6vw, 40px)/1.05 var(--f-display); letter-spacing:-.03em; margin:22px 0 14px}
@@ -230,15 +220,20 @@ button{font:inherit; color:inherit; background:none; border:0; padding:0; cursor
 @keyframes swap{from{opacity:0; transform:translateY(8px)}}
 
 /* Миссия и ценности */
-.mission{font:500 clamp(26px, 3.1vw, 44px)/1.2 var(--f-display); letter-spacing:-.025em; margin:0; max-width:1100px; text-wrap:pretty}
+.mission{font:500 clamp(24px, 2.6vw, 38px)/1.22 var(--f-display); letter-spacing:-.025em; margin:0; max-width:1100px; text-wrap:pretty}
 .values{display:grid; grid-template-columns:repeat(3, 1fr); gap:clamp(24px, 4vw, 56px)}
-.value{border-top:1px solid rgba(255,255,255,.4); padding-top:26px}
+.value{border-top:1px solid rgba(255,255,255,.4); padding-top:20px}
 .value .h3{margin-bottom:14px}
 .value p{margin:0; color:rgba(255,255,255,.88); font-size:16px}
-.sec--blue .values__label{margin-top:clamp(64px, 8vw, 104px); margin-bottom:28px}
+.sec--blue .values__label{margin-top:clamp(40px, 5vw, 64px); margin-bottom:20px}
 
 /* Новости */
-.news{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:20px}
+.news{display:grid; grid-template-columns:1.15fr 1fr; grid-template-rows:1fr 1fr; gap:20px}
+.card--big{grid-row:span 2}
+.card.card--row{flex-direction:row}
+.card--big .card__cover{aspect-ratio:auto; flex:1; min-height:260px}
+.card--row .card__cover{aspect-ratio:auto; width:38%; flex-shrink:0}
+.card--row .card__body{padding:22px 24px}
 .card{background:#fff; border-radius:var(--r); overflow:hidden; display:flex; flex-direction:column; transition:transform .4s var(--ease), box-shadow .4s}
 .card:hover{transform:translateY(-4px); box-shadow:0 24px 48px -28px rgba(10,22,54,.35)}
 .card__cover{aspect-ratio:16/9; background:var(--blue); position:relative; overflow:hidden}
@@ -252,11 +247,11 @@ button{font:inherit; color:inherit; background:none; border:0; padding:0; cursor
 
 /* Партнёрам */
 .tiles{display:grid; grid-template-columns:repeat(3, 1fr); border-top:1px solid var(--line); border-left:1px solid var(--line)}
-.tile{display:flex; flex-direction:column; justify-content:space-between; gap:28px; padding:30px 30px 28px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); transition:background .25s, color .25s}
+.tile{display:flex; flex-direction:row; justify-content:space-between; align-items:center; gap:20px; padding:22px 24px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); transition:background .25s, color .25s}
 .tile:hover{background:var(--blue); color:#fff}
 .tile:hover .tile__text{color:rgba(255,255,255,.82)}
-.tile__text{margin:8px 0 0; color:var(--muted); font-size:16px}
-.tile__go{align-self:flex-end; width:44px; height:44px; border-radius:50%; border:1px solid currentColor; display:grid; place-items:center; opacity:.7}
+.tile__text{margin:6px 0 0; color:var(--muted); font-size:15px}
+.tile__go{flex-shrink:0; width:44px; height:44px; border-radius:50%; border:1px solid currentColor; display:grid; place-items:center; opacity:.7}
 
 /* ── Подвал ── */
 .ftr{background:var(--navy); color:rgba(255,255,255,.84); padding:80px 0 32px; font-size:15px}
@@ -317,16 +312,15 @@ html.a11y .tool[data-a11y]{background:var(--gold); color:var(--navy)}
 }
 @media (max-width:960px){
   .hero__grid{grid-template-columns:1fr; min-height:0; padding-top:48px}
-  .hero__map{order:-1; min-height:0; height:300px; margin:-24px -10% -40px}
+  .hero__map{order:-1; min-height:0; height:280px; margin:-16px -10% 8px}
   .hero__map svg{max-height:340px; width:auto}
   .hero__facts{grid-template-columns:1fr}
   .hero__facts li + li{padding-left:0; border-left:0; border-top:1px solid var(--line-blue)}
   .hero__facts li{padding:18px 0}
-  .about, .prio{grid-template-columns:1fr; gap:24px}
-  .path__list{grid-template-columns:1fr 1fr; row-gap:40px}
-  .path__list::before{display:none}
+  .about{grid-template-columns:1fr; gap:24px}
   .values{grid-template-columns:1fr}
-  .news{grid-template-columns:1fr}
+  .news{grid-template-columns:1fr; grid-template-rows:auto}
+  .card--big{grid-row:auto}
   .tiles{grid-template-columns:1fr 1fr}
   .ftr__top{grid-template-columns:1fr}
   .sec__head{flex-direction:column; align-items:start; margin-bottom:40px}
@@ -334,6 +328,9 @@ html.a11y .tool[data-a11y]{background:var(--gold); color:var(--navy)}
   .xs__wells, .xs__hint{display:none}
 }
 @media (max-width:600px){
+  .card.card--row{flex-direction:column}
+  .card--big .card__cover{aspect-ratio:16/9; flex:none; min-height:0}
+  .card--row .card__cover{width:auto; aspect-ratio:16/9}
   .hdr__in{height:68px; gap:4px}
   .logo{margin-right:auto}
   .logo img{height:34px}
@@ -341,7 +338,8 @@ html.a11y .tool[data-a11y]{background:var(--gold); color:var(--navy)}
   .twin{height:40px; padding:0 12px 0 8px; font-size:14px; gap:6px}
   .twin__ext, .hdr .lang{display:none}
   .twin__ico{width:22px; height:22px}
-  .dirs, .tiles, .path__list{grid-template-columns:1fr}
+  .dirs, .tiles{grid-template-columns:1fr}
+  .path__step{grid-template-columns:1fr}
   .dir .h3{min-height:0}
   .ftr__cols{grid-template-columns:1fr 1fr}
   .btn{height:52px; padding:0 22px}
@@ -395,7 +393,7 @@ html.a11y .tool[data-a11y]{background:var(--gold); color:var(--navy)}
                 <li><a href="#"><span data-t="m.owner">Единственный участник</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
                 <li><a href="#"><span data-t="m.leaders">Руководство</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
                 <li><a href="#"><span data-t="m.structure">Организационная структура</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
-                <li><a href="#priorities"><span data-t="m.plan">План развития компании</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+                <li><a href="#"><span data-t="m.plan">План развития компании</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
                 <li><a href="#"><span data-t="m.awards">Достижения и награды</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
                 <li><a href="#"><span data-t="m.brand">Новый фирменный стиль</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
               </ul>
@@ -452,7 +450,7 @@ html.a11y .tool[data-a11y]{background:var(--gold); color:var(--navy)}
 
 <div class="drawer" id="drawer">
   <details><summary><span data-t="nav.about">О нас</span><span aria-hidden="true">+</span></summary>
-    <ul><li><a href="#company" data-t="m.activity">Деятельность</a></li><li><a href="#directions" data-t="m.services">Услуги</a></li><li><a href="#" data-t="m.owner">Единственный участник</a></li><li><a href="#" data-t="m.leaders">Руководство</a></li><li><a href="#" data-t="m.structure">Организационная структура</a></li><li><a href="#priorities" data-t="m.plan">План развития компании</a></li><li><a href="#" data-t="m.awards">Достижения и награды</a></li><li><a href="#" data-t="m.brand">Новый фирменный стиль</a></li></ul>
+    <ul><li><a href="#company" data-t="m.activity">Деятельность</a></li><li><a href="#directions" data-t="m.services">Услуги</a></li><li><a href="#" data-t="m.owner">Единственный участник</a></li><li><a href="#" data-t="m.leaders">Руководство</a></li><li><a href="#" data-t="m.structure">Организационная структура</a></li><li><a href="#" data-t="m.plan">План развития компании</a></li><li><a href="#" data-t="m.awards">Достижения и награды</a></li><li><a href="#" data-t="m.brand">Новый фирменный стиль</a></li></ul>
   </details>
   <a href="#projects" data-t="nav.projects">Проекты</a>
   <details><summary><span data-t="nav.gov">Корпоративное управление</span><span aria-hidden="true">+</span></summary>
@@ -500,42 +498,22 @@ html.a11y .tool[data-a11y]{background:var(--gold); color:var(--navy)}
 <section class="sec" id="company" aria-labelledby="about-title">
   <div class="wrap">
     <div class="about reveal">
-      <div>
+      <div class="about__text">
         <p class="eyebrow" data-t="about.eyebrow">О компании</p>
         <h2 class="h2" id="about-title" data-t="about.title">Кто мы</h2>
-      </div>
-      <div class="about__text">
         <p class="lead" data-t="about.lead">KMG Digital отвечает за развитие и устойчивую работу IT-ландшафта группы компаний КМГ — от телекоммуникационного оборудования до корпоративных цифровых сервисов.</p>
         <p class="muted" data-t="about.p1">Эксплуатируем IT-инфраструктуру, сопровождаем информационные системы, разрабатываем программные продукты и автоматизируем производственные и корпоративные процессы. Реализуем IT-проекты «под ключ», предоставляем программно-аппаратные и облачные ресурсы, внедряем автоматизированные рабочие места и обеспечиваем работу высококритичных IT-сервисов.</p>
-        <p class="muted" data-t="about.p2">Проводим исследования и разработки в области информационных технологий и инженерных решений, развиваем компетенции пользователей.</p>
         <a class="link" href="#"><span data-t="about.more">Подробнее о деятельности</span> <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg></a>
       </div>
-    </div>
-
-    <div class="path reveal">
-      <h3 class="h3" data-t="path.title">Путь компании</h3>
-      <ol class="path__list">
-        <li class="path__step"><p class="path__year num">2006</p><p class="path__text" data-t="path.s1">Регистрация товарищества. Компания создана для управления инвестициями в нефтегазовые проекты.</p></li>
-        <li class="path__step"><p class="path__year num">2017</p><p class="path__text" data-t="path.s2">Совет по модернизации и трансформации КМГ решает создать на базе товарищества единый центр компетенций.</p></li>
-        <li class="path__step"><p class="path__year num">2018</p><p class="path__text" data-t="path.s3">Компания начинает работать как Общий центр обслуживания по IT-сервисам для группы компаний КМГ.</p></li>
-        <li class="path__step path__step--now"><p class="path__year" data-t="f3.k">Сегодня</p><p class="path__text" data-t="path.s4">Единый технологический ландшафт, продуктовый подход и цифровые решения с измеримым эффектом для бизнеса.</p></li>
-      </ol>
-    </div>
-
-    <div class="prio reveal" id="priorities">
-      <div>
-        <p class="eyebrow" data-t="prio.eyebrow">План развития</p>
-        <h3 class="h2 prio__title" data-t="prio.title">Приоритеты развития</h3>
-        <p class="muted prio__lead" data-t="prio.lead">На чём компания сосредоточена в ближайшие годы.</p>
-        <a class="link" href="#"><span data-t="m.plan">План развития компании</span> <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg></a>
+      <div class="path">
+        <h3 class="h3" data-t="path.title">Путь компании</h3>
+        <ol class="path__list">
+          <li class="path__step"><p class="path__year num">2006</p><p class="path__text" data-t="path.s1">Регистрация товарищества. Компания создана для управления инвестициями в нефтегазовые проекты.</p></li>
+          <li class="path__step"><p class="path__year num">2017</p><p class="path__text" data-t="path.s2">Совет по модернизации и трансформации КМГ решает создать на базе товарищества единый центр компетенций.</p></li>
+          <li class="path__step"><p class="path__year num">2018</p><p class="path__text" data-t="path.s3">Компания начинает работать как Общий центр обслуживания по IT-сервисам для группы компаний КМГ.</p></li>
+          <li class="path__step path__step--now"><p class="path__year" data-t="f3.k">Сегодня</p><p class="path__text" data-t="path.s4">Единый технологический ландшафт, продуктовый подход и цифровые решения с измеримым эффектом для бизнеса.</p></li>
+        </ol>
       </div>
-      <ul class="prio__list">
-        <li><b data-t="prio.1">Надёжность и безопасность IT-инфраструктуры</b> <span data-t="prio.1t">инфраструктура</span></li>
-        <li><b data-t="prio.2">Искусственный интеллект в производственных и корпоративных процессах</b> <span data-t="prio.2t">ИИ</span></li>
-        <li><b data-t="prio.3">Управление на основе данных</b> <span data-t="prio.3t">данные</span></li>
-        <li><b data-t="prio.4">Технологическая независимость</b> <span data-t="prio.4t">платформы</span></li>
-        <li><b data-t="prio.5">Собственная профессиональная экспертиза</b> <span data-t="prio.5t">люди</span></li>
-      </ul>
     </div>
   </div>
 </section>
@@ -643,7 +621,7 @@ html.a11y .tool[data-a11y]{background:var(--gold); color:var(--navy)}
           <p class="card__text" data-t="n1.p">На стенде показали GeoAI, AI HSE и платформу данных Группы.</p>
         </div>
       </a>
-      <a class="card reveal" href="#">
+      <a class="card card--row reveal" href="#">
         <div class="card__cover" data-cover="1"></div>
         <div class="card__body">
           <div class="card__meta"><time class="num" datetime="2026-10-01">01.10.2026</time><span data-t="nav.projects">Проекты</span></div>
@@ -651,7 +629,7 @@ html.a11y .tool[data-a11y]{background:var(--gold); color:var(--navy)}
           <p class="card__text" data-t="n2.p">Наблюдения, наряды-допуски и расследования — в одной системе.</p>
         </div>
       </a>
-      <a class="card reveal" href="#">
+      <a class="card card--row reveal" href="#">
         <div class="card__cover" data-cover="2"></div>
         <div class="card__body">
           <div class="card__meta"><time class="num" datetime="2026-09-24">24.09.2026</time><span data-t="n3.cat">Компания</span></div>
@@ -668,7 +646,6 @@ html.a11y .tool[data-a11y]{background:var(--gold); color:var(--navy)}
   <div class="wrap">
     <div class="sec__head reveal">
       <div>
-        <p class="eyebrow" data-t="part.eyebrow">Раскрытие информации</p>
         <h2 class="h2" id="part-title" data-t="part.title">Партнёрам и поставщикам</h2>
       </div>
     </div>
@@ -1007,8 +984,8 @@ setLang(startLang || 'ru');
   const svg = document.getElementById('iso');
   const NS = 'http://www.w3.org/2000/svg';
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const N = 17, STEP = 25, BASE = -2150;   // сечение изолиний 25 м
-  const paths = [], labels = [];
+  const N = 17, SHOWN = 12;                // внутренние линии не рисуем — там знак логотипа
+  const paths = [];
   function pt(t, k, ph){
     const s = 1 - k * (0.9 / N);
     const cx = 300 + (1 - s) * 28, cy = 392 + (1 - s) * 120;   // свод смещён: крутое и пологое крыло
@@ -1023,7 +1000,7 @@ setLang(startLang || 'ru');
     for (let i = 0; i <= 160; i++){ const p = pt(i / 160 * Math.PI * 2, k, ph); s += (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }
     return s + 'Z';
   }
-  for (let k = 0; k < N; k++){
+  for (let k = 0; k < SHOWN; k++){
     const p = document.createElementNS(NS, 'path');
     const index = k % 4 === 0;                                  // утолщённые «основные» изолинии
     p.setAttribute('stroke-width', index ? 2 : 1);
@@ -1032,30 +1009,19 @@ setLang(startLang || 'ru');
     if (!reduce){ p.style.opacity = 0; p.style.transform = 'scale(.82)'; }
     p.style.transition = 'opacity 1.2s ' + (0.2 + (N - k) * 0.05) + 's, transform 1.6s cubic-bezier(.16,1,.3,1) ' + (0.2 + (N - k) * 0.05) + 's';
     svg.appendChild(p); paths.push(p);
-    if (index){
-      const t = document.createElementNS(NS, 'text');
-      t.textContent = '−' + Math.abs(BASE + k * STEP).toLocaleString('ru-RU');
-      t.style.opacity = reduce ? 1 : 0; t.style.transition = 'opacity .8s ' + (1 + k * 0.06) + 's';
-      svg.appendChild(t); labels.push([t, k]);
-    }
   }
-  const well = document.createElementNS(NS, 'circle');
-  well.setAttribute('class', 'well'); well.setAttribute('r', 4.5);
-  well.style.opacity = reduce ? 1 : 0; well.style.transition = 'opacity .6s 2s';
-  svg.append(well);
-  function draw(ph){
-    paths.forEach((p, k) => p.setAttribute('d', d(k, ph)));
-    labels.forEach(([t, k], j) => {
-      const right = j % 2 === 0, p = pt(right ? 1.7 + j * .12 : Math.PI * 2 - 1.9 - j * .1, k, ph);
-      t.setAttribute('x', p[0] + (right ? 8 : -8)); t.setAttribute('y', p[1] + 4); t.setAttribute('text-anchor', right ? 'start' : 'end');
-    });
-    const c = pt(Math.PI, N - 1, ph), top = pt(0, N - 1, ph);
-    well.setAttribute('cx', c[0]); well.setAttribute('cy', (c[1] + top[1]) / 2 + 30);
-  }
+  // знак логотипа KMG Digital в центре капли: из белой версии логотипа вырезаем только каплю
+  const mark = document.createElementNS(NS, 'svg');
+  mark.setAttribute('viewBox', '160 225 700 940'); mark.setAttribute('x', 262); mark.setAttribute('y', 418);
+  mark.setAttribute('width', 116); mark.setAttribute('height', 156); mark.style.overflow = 'hidden';
+  mark.innerHTML = '<image href="assets/kmg_digital_white.svg" width="2497" height="1215"/>';
+  mark.style.transition = 'opacity 1s .9s'; if (!reduce) mark.style.opacity = 0;
+  svg.append(mark);
+  function draw(ph){ paths.forEach((p, k) => p.setAttribute('d', d(k, ph))); }
   draw(0);
   requestAnimationFrame(() => requestAnimationFrame(() => {
     paths.forEach(p => { p.style.opacity = 1; p.style.transform = 'none'; });
-    labels.forEach(([t]) => t.style.opacity = 1); well.style.opacity = 1;
+    mark.style.opacity = 1;
   }));
   if (!reduce){
     let ph = 0, last = performance.now(), vis = true;
