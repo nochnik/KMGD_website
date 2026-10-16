@@ -1,0 +1,1141 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KMG Digital — IT-сервисы группы компаний КМГ</title>
+<meta name="description" content="ТОО «KMG Digital» — Общий центр обслуживания по IT-сервисам и центр цифровых компетенций группы компаний АО «НК «КазМунайГаз».">
+<link rel="icon" href="assets/kmg_digital.svg">
+<link rel="alternate" hreflang="kk" href="?lang=kk">
+<link rel="alternate" hreflang="ru" href="?lang=ru">
+<link rel="alternate" hreflang="en" href="?lang=en">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Geologica — заголовки, Golos Text — текст: оба с полной казахской кириллицей (ә ғ қ ң ө ұ ү һ і).
+     Montserrat — шрифт брендбука, подключён для сравнения в панели макета. -->
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;500;600;700&family=Golos+Text:wght@400;500;600&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── Токены. Цвета — брендбук KMG Digital: Signature Blue 60% / Cloud Dancer 40% ── */
+:root{
+  --blue:#0133AD;        /* Signature Blue, Pantone 286 C */
+  --blue-ink:#0A2A86;
+  --blue-soft:#E2E8F6;   /* голубой пласт */
+  --navy:#0A1636;
+  --ink:#0E1A33;
+  --cloud:#F0EFEB;       /* Cloud Dancer, Pantone 11-4201 */
+  --white:#FFFFFF;
+  --line:#D9D7D0;
+  --line-blue:rgba(255,255,255,.22);
+  --muted:#525B6E;       /* 6.6:1 на белом */
+  --gold:#F2B33D;        /* фокус, отметки на карте, выбранная скважина */
+
+  --f-display:"Geologica", "Golos Text", system-ui, sans-serif;
+  --f-body:"Golos Text", system-ui, sans-serif;
+
+  --wrap:1280px;
+  --gut:clamp(16px, 4vw, 48px);
+  --sec:clamp(72px, 9vw, 128px);
+  --r:16px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --z-hdr:50; --z-drawer:49; --z-panel:60;
+}
+html[data-font="brand"]{--f-display:"Montserrat", system-ui, sans-serif}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
+body{margin:0; background:var(--white); color:var(--ink); font:400 17px/1.6 var(--f-body); -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility}
+img,svg{display:block; max-width:100%}
+a{color:inherit; text-decoration:none}
+button{font:inherit; color:inherit; background:none; border:0; padding:0; cursor:pointer; touch-action:manipulation}
+:focus-visible{outline:3px solid var(--gold); outline-offset:3px; border-radius:6px}
+.wrap{max-width:var(--wrap); margin:0 auto; padding:0 var(--gut)}
+.skip{position:absolute; left:16px; top:-60px; z-index:100; background:var(--blue); color:#fff; padding:10px 16px; border-radius:8px}
+.skip:focus{top:12px}
+
+/* Типографика: Geologica плотная и узкая — держит длинные казахские слова */
+.h1{font:600 clamp(38px, 4.5vw, 66px)/1.05 var(--f-display); letter-spacing:-.035em; margin:0; text-wrap:balance}
+.h2{font:600 clamp(32px, 3.4vw, 50px)/1.06 var(--f-display); letter-spacing:-.03em; margin:0; text-wrap:balance}
+.h3{font:600 21px/1.25 var(--f-display); letter-spacing:-.015em; margin:0}
+.eyebrow{display:flex; align-items:center; gap:10px; font:600 15px/1.2 var(--f-body); color:var(--blue); margin:0 0 18px}
+.eyebrow::before{content:""; flex-shrink:0; width:9px; height:13px; background:currentColor; clip-path:path("M4.5 0C4.5 0 9 5.6 9 8.5A4.5 4.5 0 0 1 0 8.5C0 5.6 4.5 0 4.5 0Z")}
+.lead{font:500 clamp(20px, 1.8vw, 25px)/1.42 var(--f-display); letter-spacing:-.015em; margin:0}
+.muted{color:var(--muted)}
+.link{display:inline-flex; align-items:center; gap:10px; font:600 16px/1 var(--f-body); color:var(--blue); padding:8px 0; border-bottom:1.5px solid currentColor}
+.link svg{transition:transform .3s var(--ease)}
+.link:hover svg{transform:translateX(4px)}
+.tbd{border-bottom:1px dashed currentColor}
+.num{font-variant-numeric:tabular-nums}
+
+.btn{display:inline-flex; align-items:center; gap:12px; height:56px; padding:0 26px; border-radius:999px; font:600 16px/1 var(--f-body); transition:background .25s, color .25s, border-color .25s}
+.btn--light{background:#fff; color:var(--blue)}
+.btn--light:hover{background:var(--cloud)}
+.btn--ghost{border:1.5px solid rgba(255,255,255,.55); color:#fff}
+.btn--ghost:hover{border-color:#fff; background:rgba(255,255,255,.08)}
+
+/* ── Шапка ── */
+.hdr{position:sticky; top:0; z-index:var(--z-hdr); background:rgba(255,255,255,.96); backdrop-filter:saturate(1.4) blur(10px); border-bottom:1px solid transparent; transition:border-color .3s}
+.hdr.is-stuck{border-bottom-color:var(--line)}
+.hdr__in{display:flex; align-items:center; gap:12px; height:84px}
+.logo{flex-shrink:0}
+.logo img{height:46px; width:auto}
+.nav{margin-left:auto}
+.nav__list{display:flex; list-style:none; margin:0; padding:0}
+.nav__btn{display:flex; align-items:center; gap:6px; height:84px; padding:0 9px; font:500 15px/1 var(--f-body); color:var(--ink); position:relative; white-space:nowrap}
+.nav__btn::after{content:""; position:absolute; left:9px; right:9px; bottom:22px; height:2px; background:var(--blue); transform:scaleX(0); transform-origin:left; transition:transform .35s var(--ease)}
+.nav__btn:hover::after,.nav__item.is-open .nav__btn::after{transform:scaleX(1)}
+.nav__btn .chev{width:10px; transition:transform .3s}
+.nav__item.is-open .chev{transform:rotate(180deg)}
+
+/* Кнопка «Цифровой двойник» — как Alem.Cloud у NITEC: отдельный вход в систему */
+.twin{flex-shrink:0; display:inline-flex; align-items:center; gap:10px; height:44px; padding:0 18px 0 12px; border-radius:999px; background:var(--blue); color:#fff; font:600 15px/1 var(--f-body); white-space:nowrap; position:relative; isolation:isolate; overflow:hidden; transition:background .25s}
+.twin::before{content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(110deg, transparent 30%, rgba(255,255,255,.22) 50%, transparent 70%); transform:translateX(-100%); transition:transform .8s var(--ease)}
+.twin:hover{background:var(--blue-ink)}
+.twin:hover::before{transform:translateX(100%)}
+.twin__ico{width:26px; height:26px}
+.twin__ext{opacity:.7}
+
+.tools{display:flex; align-items:center; gap:4px; flex-shrink:0}
+.tool{height:44px; min-width:44px; padding:0 10px; display:inline-flex; align-items:center; justify-content:center; gap:6px; border-radius:999px; font:600 14px/1 var(--f-body); color:var(--ink)}
+.tool:hover{background:var(--cloud)}
+.burger{display:none}
+
+/* Язык */
+.lang{position:relative}
+.lang__menu{position:absolute; right:0; top:calc(100% + 8px); min-width:180px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:6px; list-style:none; margin:0; box-shadow:0 24px 48px -24px rgba(10,22,54,.3);
+  opacity:0; visibility:hidden; transform:translateY(-4px); transition:opacity .2s, transform .3s var(--ease), visibility 0s .3s}
+.lang.is-open .lang__menu{opacity:1; visibility:visible; transform:none; transition:opacity .2s, transform .3s var(--ease)}
+.lang__menu button{width:100%; display:flex; justify-content:space-between; align-items:center; height:44px; padding:0 12px; border-radius:10px; font:500 16px/1 var(--f-body); text-align:left}
+.lang__menu button:hover{background:var(--cloud)}
+.lang__menu button[aria-current="true"]{color:var(--blue); font-weight:600}
+.lang__menu button[aria-current="true"]::after{content:"✓"}
+
+/* Мега-меню */
+.mega{position:absolute; left:0; right:0; top:100%; background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line); box-shadow:0 30px 60px -30px rgba(10,22,54,.25);
+  opacity:0; visibility:hidden; transform:translateY(-6px); transition:opacity .2s, transform .3s var(--ease), visibility 0s .3s}
+.nav__item.is-open .mega{opacity:1; visibility:visible; transform:none; transition:opacity .25s, transform .35s var(--ease)}
+.mega__in{display:grid; grid-template-columns:minmax(260px, 1fr) 2fr; gap:48px; padding-top:40px; padding-bottom:44px}
+.mega__text{margin:12px 0 0; color:var(--muted); font-size:16px}
+.mega__links{display:grid; grid-template-columns:repeat(2, 1fr); gap:4px 32px; list-style:none; margin:0; padding:0}
+.mega__links a{display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid var(--line); font:500 17px/1.3 var(--f-display); letter-spacing:-.01em; transition:color .2s, padding .3s var(--ease)}
+.mega__links a:hover{color:var(--blue); padding-left:6px}
+.mega__links a svg{opacity:0; transition:opacity .2s}
+.mega__links a:hover svg{opacity:1}
+
+/* ── Первый экран ── */
+.hero{background:var(--blue); color:#fff; position:relative; overflow:hidden; isolation:isolate}
+.hero__grid{display:grid; grid-template-columns:1.2fr .8fr; align-items:center; gap:24px; min-height:min(700px, calc(100vh - 84px - 112px)); padding-top:56px; padding-bottom:40px}
+.hero .eyebrow{color:rgba(255,255,255,.8)}
+.hero__lead{font:400 clamp(18px, 1.45vw, 21px)/1.55 var(--f-body); color:rgba(255,255,255,.88); max-width:580px; margin:28px 0 40px}
+.hero__cta{display:flex; flex-wrap:wrap; gap:12px}
+.hero__map{position:relative; align-self:stretch; display:flex; align-items:center; justify-content:center; min-height:420px}
+.hero__map svg{width:100%; height:auto; max-height:700px; overflow:visible}
+.iso path{fill:#fff; fill-opacity:.028; stroke:#fff}
+.iso text{font:500 13px var(--f-body); font-variant-numeric:tabular-nums; fill:rgba(255,255,255,.88); paint-order:stroke; stroke:var(--blue); stroke-width:5px}
+.iso .well{fill:var(--gold)}
+.hero__facts{display:grid; grid-template-columns:repeat(3, 1fr); border-top:1px solid var(--line-blue); list-style:none; margin:0; padding:0}
+.hero__facts li{padding:22px 24px 30px 0; font:500 16px/1.45 var(--f-display); letter-spacing:-.01em; color:rgba(255,255,255,.92)}
+.hero__facts li + li{padding-left:24px; border-left:1px solid var(--line-blue)}
+.hero__facts b{display:block; font:500 14px/1 var(--f-body); color:rgba(255,255,255,.62); margin-bottom:10px; letter-spacing:0}
+
+.rise{opacity:0; transform:translateY(24px); animation:rise .9s var(--ease) forwards}
+@keyframes rise{to{opacity:1; transform:none}}
+.d1{animation-delay:.05s}.d2{animation-delay:.15s}.d3{animation-delay:.25s}.d4{animation-delay:.35s}
+
+/* ── Секции ── */
+.sec{padding:var(--sec) 0}
+.sec--cloud{background:var(--cloud)}
+.sec--blue{background:var(--blue); color:#fff}
+.sec--blue .eyebrow{color:rgba(255,255,255,.8)}
+.sec__head{display:flex; justify-content:space-between; align-items:end; gap:32px; margin-bottom:56px}
+.sec__lead{max-width:560px; margin:16px 0 0; color:var(--muted)}
+
+/* О компании */
+.about{display:grid; grid-template-columns:1fr 1.6fr; gap:clamp(32px, 6vw, 96px)}
+.about__text p{margin:0 0 20px}
+.about__text .lead{margin-bottom:28px; color:var(--ink)}
+.about__text .muted{max-width:680px}
+
+.path{margin-top:clamp(64px, 8vw, 112px)}
+.path__list{list-style:none; margin:40px 0 0; padding:0; display:grid; grid-template-columns:repeat(4, 1fr); position:relative}
+.path__list::before{content:""; position:absolute; left:0; right:0; top:11px; height:1px; background:var(--line)}
+.path__step{position:relative; padding:44px 28px 0 0}
+.path__step::before{content:""; position:absolute; left:0; top:4px; width:15px; height:15px; border-radius:50%; background:#fff; border:2px solid var(--blue)}
+.path__step--now::before{background:var(--blue); box-shadow:0 0 0 6px rgba(1,51,173,.14)}
+.path__year{font:600 36px/1 var(--f-display); letter-spacing:-.03em; color:var(--blue); margin:0 0 14px}
+.path__text{margin:0; font-size:16px; color:var(--muted); max-width:270px}
+
+.prio{margin-top:clamp(64px, 8vw, 104px); display:grid; grid-template-columns:1fr 1.6fr; gap:clamp(32px, 6vw, 96px); padding-top:48px; border-top:1px solid var(--line)}
+.prio__title{font-size:clamp(26px, 2.6vw, 36px)}
+.prio__lead{margin:16px 0 28px; max-width:360px}
+.prio__list{list-style:none; margin:0; padding:0}
+.prio__list li{display:grid; grid-template-columns:1fr auto; gap:24px; align-items:baseline; padding:20px 0; border-bottom:1px solid var(--line); font:500 clamp(18px, 1.6vw, 22px)/1.35 var(--f-display); letter-spacing:-.015em}
+.prio__list b{font-weight:inherit}
+.prio__list span{font:500 14px/1 var(--f-body); color:var(--muted); letter-spacing:0}
+
+/* Направления */
+.dirs{display:grid; grid-template-columns:repeat(4, 1fr); gap:20px}
+.dir{background:#fff; border-radius:var(--r); padding:30px 28px 18px; display:flex; flex-direction:column}
+.dir__mark{width:40px; height:40px; margin-bottom:28px}
+.dir .h3{min-height:2.5em; margin-bottom:18px}
+.dir ul{list-style:none; margin:0; padding:0}
+.dir li{padding:14px 0; border-top:1px solid var(--line); font-size:16px; line-height:1.45}
+.dirs__foot{margin-top:40px; display:flex; gap:32px; flex-wrap:wrap}
+
+/* ── Проекты: геологический разрез ──
+   Сверху — производство, ниже — управление, в основании — фундамент данных.
+   Пунктирные «скважины» показывают, что каждый продукт берёт данные из общего фундамента. */
+.xs{display:grid; grid-template-columns:1fr 380px; gap:24px; align-items:stretch}
+.xs__map{position:relative; border-radius:var(--r); overflow:hidden; border:1px solid var(--line)}
+.xs__wells{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1}
+.xs__wells path{fill:none; stroke:var(--blue); stroke-width:1.5; stroke-dasharray:3 6; opacity:.22; animation:flow 1.4s linear infinite; transition:opacity .3s, stroke .3s, stroke-width .3s}
+.xs__wells path.is-on{stroke:var(--gold); stroke-width:2.5; opacity:1; stroke-dasharray:6 6}
+.xs__wells circle{fill:#fff; stroke:var(--blue); stroke-width:1.5; opacity:.5}
+.xs__wells circle.is-on{opacity:1}
+.xs__wells circle.is-on{fill:var(--gold); stroke:var(--gold)}
+@keyframes flow{to{stroke-dashoffset:-18}}
+.xs__layer{position:relative; display:grid; grid-template-columns:200px 1fr; gap:24px; align-items:center; padding:46px 28px 40px; min-height:170px}
+.xs__horizon{position:absolute; left:0; right:0; top:-17px; width:100%; height:18px; z-index:0}
+.xs__layer--prod{background-color:#F6F5F1; background-image:radial-gradient(rgba(1,51,173,.13) 1px, transparent 1.5px); background-size:16px 16px; padding-top:40px}
+.xs__layer--mgmt{background-color:var(--blue-soft); background-image:repeating-linear-gradient(0deg, transparent 0 15px, rgba(1,51,173,.08) 15px 16px)}
+.xs__layer--data{background-color:var(--blue); color:#fff; background-image:repeating-linear-gradient(135deg, rgba(255,255,255,.07) 0 1px, transparent 1px 13px)}
+.xs__layer--mgmt .xs__horizon path{fill:var(--blue-soft); stroke:rgba(1,51,173,.35)}
+.xs__layer--data .xs__horizon path{fill:var(--blue); stroke:rgba(255,255,255,.4)}
+.xs__name{position:relative; z-index:2}
+.xs__name b{display:block; font:600 19px/1.2 var(--f-display); letter-spacing:-.015em}
+.xs__name span{display:block; margin-top:6px; font-size:14px; line-height:1.4; color:var(--muted)}
+.xs__layer--data .xs__name span{color:rgba(255,255,255,.8)}
+.xs__items{position:relative; z-index:2; display:flex; flex-wrap:wrap; gap:12px 14px}
+.prod{display:inline-flex; align-items:center; gap:10px; min-height:48px; padding:0 18px 0 14px; border-radius:999px; background:#fff; border:1px solid rgba(1,51,173,.18); font:600 16px/1.1 var(--f-display); letter-spacing:-.01em; color:var(--ink); box-shadow:0 8px 20px -14px rgba(10,22,54,.45); transition:background .2s, color .2s, border-color .2s, transform .3s var(--ease)}
+.prod::before{content:""; flex-shrink:0; width:10px; height:10px; border-radius:50%; border:2px solid var(--blue); background:#fff; transition:background .2s, border-color .2s}
+.prod:hover{border-color:var(--blue); transform:translateY(-2px)}
+.prod[aria-pressed="true"]{background:var(--navy); border-color:var(--navy); color:#fff}
+.prod[aria-pressed="true"]::before{background:var(--gold); border-color:var(--gold)}
+.xs__layer--data .prod{background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.35); color:#fff; box-shadow:none}
+.xs__layer--data .prod::before{border-color:#fff; background:transparent}
+.xs__layer--data .prod[aria-pressed="true"]{background:#fff; color:var(--blue); border-color:#fff}
+.xs__layer--data .prod[aria-pressed="true"]::before{background:var(--gold); border-color:var(--gold)}
+.xs__hint{display:flex; align-items:center; gap:10px; margin:14px 0 0; font-size:14px; color:var(--muted)}
+.xs__hint i{flex-shrink:0; width:28px; border-top:2px dashed var(--blue); opacity:.6}
+
+.xs__card{position:sticky; top:108px; align-self:start; background:var(--navy); color:#fff; border-radius:var(--r); padding:30px 30px 28px; min-height:420px; display:flex; flex-direction:column}
+.xs__level{display:inline-flex; align-self:flex-start; align-items:center; gap:8px; min-height:30px; padding:0 12px; border-radius:999px; background:rgba(255,255,255,.1); font:500 14px/1.2 var(--f-body); color:rgba(255,255,255,.88)}
+.xs__level::before{content:""; flex-shrink:0; width:8px; height:8px; border-radius:50%; background:var(--gold)}
+.xs__pname{font:600 clamp(30px, 2.6vw, 40px)/1.05 var(--f-display); letter-spacing:-.03em; margin:22px 0 14px}
+.xs__desc{margin:0; color:rgba(255,255,255,.86); font-size:17px}
+.xs__tags{display:flex; flex-wrap:wrap; gap:6px; margin:22px 0 0; padding:0; list-style:none}
+.xs__tags li{font:500 13px/1 var(--f-body); padding:8px 10px; border-radius:8px; background:rgba(255,255,255,.1); color:rgba(255,255,255,.85)}
+.xs__more{margin-top:auto; padding-top:32px}
+.xs__more .link{color:#fff}
+.xs__card.is-swap .xs__pname, .xs__card.is-swap .xs__desc{animation:swap .45s var(--ease)}
+@keyframes swap{from{opacity:0; transform:translateY(8px)}}
+
+/* Миссия и ценности */
+.mission{font:500 clamp(26px, 3.1vw, 44px)/1.2 var(--f-display); letter-spacing:-.025em; margin:0; max-width:1100px; text-wrap:pretty}
+.values{display:grid; grid-template-columns:repeat(3, 1fr); gap:clamp(24px, 4vw, 56px)}
+.value{border-top:1px solid rgba(255,255,255,.4); padding-top:26px}
+.value .h3{margin-bottom:14px}
+.value p{margin:0; color:rgba(255,255,255,.88); font-size:16px}
+.sec--blue .values__label{margin-top:clamp(64px, 8vw, 104px); margin-bottom:28px}
+
+/* Новости */
+.news{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:20px}
+.card{background:#fff; border-radius:var(--r); overflow:hidden; display:flex; flex-direction:column; transition:transform .4s var(--ease), box-shadow .4s}
+.card:hover{transform:translateY(-4px); box-shadow:0 24px 48px -28px rgba(10,22,54,.35)}
+.card__cover{aspect-ratio:16/9; background:var(--blue); position:relative; overflow:hidden}
+.card__cover svg{position:absolute; inset:0; width:100%; height:100%}
+.card__body{padding:24px 26px 28px; display:flex; flex-direction:column; gap:12px; flex:1}
+.card__meta{display:flex; gap:12px; font:500 14px/1 var(--f-body); color:var(--muted)}
+.card__meta span{color:var(--blue)}
+.card__title{font:600 20px/1.28 var(--f-display); letter-spacing:-.015em; margin:0}
+.card--big .card__title{font-size:24px}
+.card__text{margin:0; color:var(--muted); font-size:16px}
+
+/* Партнёрам */
+.tiles{display:grid; grid-template-columns:repeat(3, 1fr); border-top:1px solid var(--line); border-left:1px solid var(--line)}
+.tile{display:flex; flex-direction:column; justify-content:space-between; gap:28px; padding:30px 30px 28px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); transition:background .25s, color .25s}
+.tile:hover{background:var(--blue); color:#fff}
+.tile:hover .tile__text{color:rgba(255,255,255,.82)}
+.tile__text{margin:8px 0 0; color:var(--muted); font-size:16px}
+.tile__go{align-self:flex-end; width:44px; height:44px; border-radius:50%; border:1px solid currentColor; display:grid; place-items:center; opacity:.7}
+
+/* ── Подвал ── */
+.ftr{background:var(--navy); color:rgba(255,255,255,.84); padding:80px 0 32px; font-size:15px}
+.ftr__top{display:grid; grid-template-columns:1.3fr 2fr 1.2fr; gap:48px; padding-bottom:56px; border-bottom:1px solid rgba(255,255,255,.14)}
+.ftr__logos{display:flex; align-items:center; gap:22px}
+.ftr__logos img:first-child{height:58px; margin-left:-10px}
+.ftr__logos img:last-child{height:40px}
+.ftr__logos i{width:1px; height:36px; background:rgba(255,255,255,.25)}
+.ftr__owner{margin:26px 0 0; max-width:300px; color:rgba(255,255,255,.66)}
+.ftr__cols{display:grid; grid-template-columns:repeat(3, 1fr); gap:32px}
+.ftr h4{font:600 14px/1 var(--f-body); color:rgba(255,255,255,.55); margin:0 0 18px}
+.ftr ul{list-style:none; margin:0; padding:0}
+.ftr li{margin:0 0 11px}
+.ftr a:hover{color:#fff}
+.ftr address{font-style:normal; line-height:1.6}
+.ftr address p{margin:0 0 14px}
+.ftr__social{display:flex; gap:8px; margin-top:22px}
+.ftr__social a{width:44px; height:44px; border-radius:50%; border:1px solid rgba(255,255,255,.25); display:grid; place-items:center}
+.ftr__social a:hover{background:#fff; color:var(--navy)}
+.ftr__bot{display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; padding-top:28px; color:rgba(255,255,255,.6); font-size:14px}
+.ftr__bot nav{display:flex; gap:24px; flex-wrap:wrap}
+.reader{display:inline-flex; align-items:center; gap:10px; height:44px; padding:0 16px; border-radius:999px; border:1px solid rgba(255,255,255,.25); color:#fff; font:600 14px/1 var(--f-body); margin-top:14px}
+.reader[aria-pressed="true"]{background:var(--gold); border-color:var(--gold); color:var(--navy)}
+
+.reveal{opacity:0; transform:translateY(28px); transition:opacity .8s var(--ease), transform .8s var(--ease)}
+.reveal.is-in{opacity:1; transform:none}
+
+/* Панель макета — только для согласования, на боевом сайте её нет */
+.review{position:fixed; right:16px; bottom:16px; z-index:var(--z-panel); display:flex; align-items:center; gap:4px; padding:5px 5px 5px 14px; border-radius:999px; background:var(--navy); color:#fff; font:500 13px/1 var(--f-body); box-shadow:0 12px 30px -10px rgba(0,0,0,.4)}
+.review span{opacity:.65; margin-right:6px}
+.review button{height:34px; padding:0 12px; border-radius:999px; font:600 13px/1 var(--f-body); color:rgba(255,255,255,.75)}
+.review button[aria-pressed="true"]{background:#fff; color:var(--navy)}
+
+/* ── Версия для слабовидящих ── */
+html.a11y body{zoom:1.2; background:#fff; color:#000; letter-spacing:.01em}
+html.a11y .muted, html.a11y .path__text, html.a11y .card__text, html.a11y .tile__text, html.a11y .sec__lead, html.a11y .xs__name span{color:#000}
+html.a11y .hero, html.a11y .sec--blue, html.a11y .xs__layer--data{background-color:#001A5E}
+html.a11y .hero__map{display:none}
+html.a11y .hero__grid{grid-template-columns:1fr}
+html.a11y .reveal, html.a11y .rise{opacity:1; transform:none; animation:none; transition:none}
+html.a11y .xs__wells path{animation:none}
+html.a11y .tool[data-a11y]{background:var(--gold); color:var(--navy)}
+
+/* ── Адаптив ── */
+/* Компактная шапка: включается скриптом, когда меню не помещается (зависит от языка) */
+.hdr.is-compact .nav, .hdr.is-compact .tool--search{display:none}
+.hdr.is-compact .burger{display:inline-flex}
+.hdr.is-compact .twin{margin-left:auto}
+@media (max-width:1100px){
+  .nav, .tool--search{display:none}
+  .burger{display:inline-flex}
+  .twin{margin-left:auto}
+}
+@media (max-width:1120px){
+  .dirs{grid-template-columns:repeat(2, 1fr)}
+  .xs{grid-template-columns:1fr}
+  .xs__card{position:static; min-height:0}
+}
+@media (max-width:960px){
+  .hero__grid{grid-template-columns:1fr; min-height:0; padding-top:48px}
+  .hero__map{order:-1; min-height:0; height:300px; margin:-24px -10% -40px}
+  .hero__map svg{max-height:340px; width:auto}
+  .hero__facts{grid-template-columns:1fr}
+  .hero__facts li + li{padding-left:0; border-left:0; border-top:1px solid var(--line-blue)}
+  .hero__facts li{padding:18px 0}
+  .about, .prio{grid-template-columns:1fr; gap:24px}
+  .path__list{grid-template-columns:1fr 1fr; row-gap:40px}
+  .path__list::before{display:none}
+  .values{grid-template-columns:1fr}
+  .news{grid-template-columns:1fr}
+  .tiles{grid-template-columns:1fr 1fr}
+  .ftr__top{grid-template-columns:1fr}
+  .sec__head{flex-direction:column; align-items:start; margin-bottom:40px}
+  .xs__layer{grid-template-columns:1fr; gap:16px; padding:40px 20px 32px}
+  .xs__wells, .xs__hint{display:none}
+}
+@media (max-width:600px){
+  .hdr__in{height:68px; gap:4px}
+  .logo{margin-right:auto}
+  .logo img{height:34px}
+  .tools{gap:0}
+  .twin{height:40px; padding:0 12px 0 8px; font-size:14px; gap:6px}
+  .twin__ext, .hdr .lang{display:none}
+  .twin__ico{width:22px; height:22px}
+  .dirs, .tiles, .path__list{grid-template-columns:1fr}
+  .dir .h3{min-height:0}
+  .ftr__cols{grid-template-columns:1fr 1fr}
+  .btn{height:52px; padding:0 22px}
+  .review span{display:none}
+}
+@media (max-width:350px){ .twin__label{display:none} .twin{padding:0 8px} }
+
+.drawer{position:fixed; inset:68px 0 0 0; z-index:var(--z-drawer); background:#fff; overflow:auto; padding:8px var(--gut) 40px; transform:translateX(100%); transition:transform .45s var(--ease); visibility:hidden}
+@media (min-width:601px){ .drawer{inset:84px 0 0 0} }
+.drawer.is-open{transform:none; visibility:visible}
+.drawer details{border-bottom:1px solid var(--line)}
+.drawer summary, .drawer > a{display:flex; justify-content:space-between; align-items:center; min-height:64px; font:600 20px/1.2 var(--f-display); letter-spacing:-.015em; list-style:none; cursor:pointer}
+.drawer > a{border-bottom:1px solid var(--line)}
+.drawer summary::-webkit-details-marker{display:none}
+.drawer details ul{list-style:none; margin:0 0 16px; padding:0}
+.drawer details li a{display:block; padding:10px 0; color:var(--muted)}
+.drawer__lang{display:flex; gap:8px; margin-top:28px}
+.drawer__lang button{height:44px; padding:0 16px; border-radius:999px; border:1px solid var(--line); font-weight:600}
+.drawer__lang button[aria-current="true"]{background:var(--blue); border-color:var(--blue); color:#fff}
+.drawer__a11y{display:none; align-items:center; gap:10px; height:48px; margin-top:16px; font-weight:600; color:var(--blue)}
+@media (max-width:600px){ .drawer__a11y{display:inline-flex} .hdr .tool[data-a11y]{display:none} }
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important; transition:none!important; scroll-behavior:auto!important}
+  .rise, .reveal{opacity:1; transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main" data-t="skip">Перейти к содержанию</a>
+
+<!-- ═════════ Шапка ═════════ -->
+<header class="hdr" id="hdr">
+  <div class="wrap hdr__in">
+    <a class="logo" href="#" aria-label="KMG Digital"><img src="assets/kmg_digital.svg" alt="KMG Digital" width="96" height="46"></a>
+
+    <nav class="nav" data-t-aria="nav.label" aria-label="Основное меню">
+      <ul class="nav__list">
+        <li class="nav__item" data-menu>
+          <button class="nav__btn" aria-expanded="false" aria-controls="m-about"><span data-t="nav.about">О нас</span> <svg class="chev" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.6"/></svg></button>
+          <div class="mega" id="m-about">
+            <div class="wrap mega__in">
+              <div>
+                <p class="eyebrow" data-t="nav.about">О нас</p>
+                <p class="h3" data-t="mega.about.title">Общий центр обслуживания по IT-сервисам группы компаний КМГ</p>
+                <p class="mega__text" data-t="mega.about.text">Деятельность, руководство, структура и планы развития компании.</p>
+              </div>
+              <ul class="mega__links">
+                <li><a href="#company"><span data-t="m.activity">Деятельность</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+                <li><a href="#directions"><span data-t="m.services">Услуги</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+                <li><a href="#"><span data-t="m.owner">Единственный участник</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+                <li><a href="#"><span data-t="m.leaders">Руководство</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+                <li><a href="#"><span data-t="m.structure">Организационная структура</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+                <li><a href="#priorities"><span data-t="m.plan">План развития компании</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+                <li><a href="#"><span data-t="m.awards">Достижения и награды</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+                <li><a href="#"><span data-t="m.brand">Новый фирменный стиль</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="nav__item"><a class="nav__btn" href="#projects" data-t="nav.projects">Проекты</a></li>
+        <li class="nav__item" data-menu>
+          <button class="nav__btn" aria-expanded="false" aria-controls="m-gov"><span data-t="nav.gov">Корпоративное управление</span> <svg class="chev" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.6"/></svg></button>
+          <div class="mega" id="m-gov">
+            <div class="wrap mega__in">
+              <div>
+                <p class="eyebrow" data-t="nav.gov">Корпоративное управление</p>
+                <p class="h3" data-t="mega.gov.title">Документы, отчётность и комплаенс</p>
+                <p class="mega__text" data-t="mega.gov.text">Сообщить о нарушении можно через службу комплаенс — в том числе анонимно.</p>
+              </div>
+              <ul class="mega__links">
+                <li><a href="#"><span data-t="m.docs">Корпоративные документы</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+                <li><a href="#"><span data-t="m.reports">Отчётность</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+                <li><a href="#"><span data-t="m.compliance">Служба комплаенс</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+                <li><a href="#"><span data-t="m.anticor">Антикоррупционная деятельность</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="nav__item"><a class="nav__btn" href="#partners" data-t="nav.proc">Закупки</a></li>
+        <li class="nav__item"><a class="nav__btn" href="#news" data-t="nav.news">Новости</a></li>
+        <li class="nav__item"><a class="nav__btn" href="#contacts" data-t="nav.contacts">Контакты</a></li>
+      </ul>
+    </nav>
+
+    <a class="twin" href="https://digital.kmg.kz/" target="_blank" rel="noopener">
+      <!-- две капли со сдвигом: объект и его цифровая копия -->
+      <svg class="twin__ico" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M7.5 5s-4.8 5.8-4.8 9.6a4.8 4.8 0 0 0 9.6 0C12.3 10.8 7.5 5 7.5 5z" fill="#fff"/><path d="M18.5 5s-4.8 5.8-4.8 9.6a4.8 4.8 0 0 0 9.6 0C23.3 10.8 18.5 5 18.5 5z" stroke="#fff" stroke-width="1.5" stroke-dasharray="2.2 1.8"/></svg>
+      <span class="twin__label" data-t="nav.twin">Цифровой двойник</span>
+      <svg class="twin__ext" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3.5 2.5h6v6M9.5 2.5l-7 7" stroke="currentColor" stroke-width="1.6"/></svg>
+    </a>
+
+    <div class="tools">
+      <button class="tool tool--search" data-t-aria="t.search" aria-label="Поиск по сайту"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="6.5" stroke="currentColor" stroke-width="1.6"/><path d="M14 14l4 4" stroke="currentColor" stroke-width="1.6"/></svg></button>
+      <button class="tool" data-a11y aria-pressed="false" data-t-aria="t.a11y" aria-label="Версия для слабовидящих"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/></svg></button>
+      <div class="lang" id="lang">
+        <button class="tool" aria-expanded="false" aria-controls="lang-menu" data-t-aria="t.lang" aria-label="Язык сайта"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z" stroke="currentColor" stroke-width="1.6"/></svg><span id="lang-code">РУС</span></button>
+        <ul class="lang__menu" id="lang-menu">
+          <li><button data-lang="kk" lang="kk">Қазақша</button></li>
+          <li><button data-lang="ru" lang="ru" aria-current="true">Русский</button></li>
+          <li><button data-lang="en" lang="en">English</button></li>
+        </ul>
+      </div>
+      <button class="tool burger" data-t-aria="t.menu" aria-label="Открыть меню" aria-expanded="false" aria-controls="drawer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="1.8"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <details><summary><span data-t="nav.about">О нас</span><span aria-hidden="true">+</span></summary>
+    <ul><li><a href="#company" data-t="m.activity">Деятельность</a></li><li><a href="#directions" data-t="m.services">Услуги</a></li><li><a href="#" data-t="m.owner">Единственный участник</a></li><li><a href="#" data-t="m.leaders">Руководство</a></li><li><a href="#" data-t="m.structure">Организационная структура</a></li><li><a href="#priorities" data-t="m.plan">План развития компании</a></li><li><a href="#" data-t="m.awards">Достижения и награды</a></li><li><a href="#" data-t="m.brand">Новый фирменный стиль</a></li></ul>
+  </details>
+  <a href="#projects" data-t="nav.projects">Проекты</a>
+  <details><summary><span data-t="nav.gov">Корпоративное управление</span><span aria-hidden="true">+</span></summary>
+    <ul><li><a href="#" data-t="m.docs">Корпоративные документы</a></li><li><a href="#" data-t="m.reports">Отчётность</a></li><li><a href="#" data-t="m.compliance">Служба комплаенс</a></li><li><a href="#" data-t="m.anticor">Антикоррупционная деятельность</a></li></ul>
+  </details>
+  <a href="#partners" data-t="nav.proc">Закупки</a>
+  <a href="#news" data-t="nav.news">Новости</a>
+  <details><summary><span data-t="nav.contacts">Контакты</span><span aria-hidden="true">+</span></summary>
+    <ul><li><a href="#contacts" data-t="m.contacts">Контакты</a></li><li><a href="#" data-t="m.requisites">Реквизиты</a></li></ul>
+  </details>
+  <div class="drawer__lang" role="group" data-t-aria="t.lang" aria-label="Язык сайта">
+    <button data-lang="kk" lang="kk">Қазақша</button><button data-lang="ru" lang="ru" aria-current="true">Русский</button><button data-lang="en" lang="en">English</button>
+  </div>
+  <button class="drawer__a11y" id="a11y-proxy"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/></svg><span data-t="t.a11y">Версия для слабовидящих</span></button>
+</div>
+
+<main id="main">
+
+<!-- ═════════ Первый экран ═════════ -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap">
+    <div class="hero__grid">
+      <div>
+        <p class="eyebrow rise d1" data-t="hero.eyebrow">ТОО «KMG Digital» · с 2006 года</p>
+        <h1 class="h1 rise d2" id="hero-title" data-t="hero.title">IT-сервисы и&nbsp;цифровые решения группы компаний КМГ</h1>
+        <p class="hero__lead rise d3" data-t="hero.lead">Общий центр обслуживания по IT-сервисам и центр цифровых компетенций КазМунайГаза. Сопровождаем информационные системы, инфраструктуру и цифровые сервисы — для производства и корпоративных процессов.</p>
+        <div class="hero__cta rise d4">
+          <a class="btn btn--light" href="#directions"><span data-t="hero.cta1">Направления деятельности</span> <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg></a>
+          <a class="btn btn--ghost" href="#projects" data-t="nav.projects">Проекты</a>
+        </div>
+      </div>
+      <div class="hero__map" aria-hidden="true">
+        <svg class="iso" id="iso" viewBox="0 0 600 760"></svg>
+      </div>
+    </div>
+    <ul class="hero__facts">
+      <li><b data-t="f1.k">Участник</b><span data-t="f1.v">Дочерняя организация АО&nbsp;«НК&nbsp;«КазМунайГаз»</span></li>
+      <li><b data-t="f2.k">С 2018 года</b><span data-t="f2.v">Общий центр обслуживания по IT-сервисам для всей группы КМГ</span></li>
+      <li><b data-t="f3.k">Сегодня</b><span data-t="f3.v">Переход от сервисного центра к оператору цифровой экосистемы КМГ</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═════════ О компании ═════════ -->
+<section class="sec" id="company" aria-labelledby="about-title">
+  <div class="wrap">
+    <div class="about reveal">
+      <div>
+        <p class="eyebrow" data-t="about.eyebrow">О компании</p>
+        <h2 class="h2" id="about-title" data-t="about.title">Кто мы</h2>
+      </div>
+      <div class="about__text">
+        <p class="lead" data-t="about.lead">KMG Digital отвечает за развитие и устойчивую работу IT-ландшафта группы компаний КМГ — от телекоммуникационного оборудования до корпоративных цифровых сервисов.</p>
+        <p class="muted" data-t="about.p1">Эксплуатируем IT-инфраструктуру, сопровождаем информационные системы, разрабатываем программные продукты и автоматизируем производственные и корпоративные процессы. Реализуем IT-проекты «под ключ», предоставляем программно-аппаратные и облачные ресурсы, внедряем автоматизированные рабочие места и обеспечиваем работу высококритичных IT-сервисов.</p>
+        <p class="muted" data-t="about.p2">Проводим исследования и разработки в области информационных технологий и инженерных решений, развиваем компетенции пользователей.</p>
+        <a class="link" href="#"><span data-t="about.more">Подробнее о деятельности</span> <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg></a>
+      </div>
+    </div>
+
+    <div class="path reveal">
+      <h3 class="h3" data-t="path.title">Путь компании</h3>
+      <ol class="path__list">
+        <li class="path__step"><p class="path__year num">2006</p><p class="path__text" data-t="path.s1">Регистрация товарищества. Компания создана для управления инвестициями в нефтегазовые проекты.</p></li>
+        <li class="path__step"><p class="path__year num">2017</p><p class="path__text" data-t="path.s2">Совет по модернизации и трансформации КМГ решает создать на базе товарищества единый центр компетенций.</p></li>
+        <li class="path__step"><p class="path__year num">2018</p><p class="path__text" data-t="path.s3">Компания начинает работать как Общий центр обслуживания по IT-сервисам для группы компаний КМГ.</p></li>
+        <li class="path__step path__step--now"><p class="path__year" data-t="f3.k">Сегодня</p><p class="path__text" data-t="path.s4">Единый технологический ландшафт, продуктовый подход и цифровые решения с измеримым эффектом для бизнеса.</p></li>
+      </ol>
+    </div>
+
+    <div class="prio reveal" id="priorities">
+      <div>
+        <p class="eyebrow" data-t="prio.eyebrow">План развития</p>
+        <h3 class="h2 prio__title" data-t="prio.title">Приоритеты развития</h3>
+        <p class="muted prio__lead" data-t="prio.lead">На чём компания сосредоточена в ближайшие годы.</p>
+        <a class="link" href="#"><span data-t="m.plan">План развития компании</span> <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg></a>
+      </div>
+      <ul class="prio__list">
+        <li><b data-t="prio.1">Надёжность и безопасность IT-инфраструктуры</b> <span data-t="prio.1t">инфраструктура</span></li>
+        <li><b data-t="prio.2">Искусственный интеллект в производственных и корпоративных процессах</b> <span data-t="prio.2t">ИИ</span></li>
+        <li><b data-t="prio.3">Управление на основе данных</b> <span data-t="prio.3t">данные</span></li>
+        <li><b data-t="prio.4">Технологическая независимость</b> <span data-t="prio.4t">платформы</span></li>
+        <li><b data-t="prio.5">Собственная профессиональная экспертиза</b> <span data-t="prio.5t">люди</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ Направления ═════════ -->
+<section class="sec sec--cloud" id="directions" aria-labelledby="dir-title">
+  <div class="wrap">
+    <div class="sec__head reveal">
+      <div>
+        <p class="eyebrow" data-t="m.activity">Деятельность</p>
+        <h2 class="h2" id="dir-title" data-t="dir.title">Направления деятельности</h2>
+        <p class="sec__lead" data-t="dir.lead">Одиннадцать направлений, за которые KMG Digital отвечает в группе компаний КМГ.</p>
+      </div>
+    </div>
+    <div class="dirs">
+      <article class="dir reveal">
+        <svg class="dir__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="6" y="8" width="28" height="9" rx="2" stroke="#0133AD" stroke-width="1.6"/><rect x="6" y="23" width="28" height="9" rx="2" stroke="#0133AD" stroke-width="1.6"/><circle cx="11" cy="12.5" r="1.4" fill="#0133AD"/><circle cx="11" cy="27.5" r="1.4" fill="#0133AD"/></svg>
+        <h3 class="h3" data-t="dir.g1">Инфраструктура и безопасность</h3>
+        <ul><li data-t="d1.1">Развитие и эксплуатация IT-инфраструктуры</li><li data-t="d1.2">Информационная безопасность и устойчивость критически важных IT-сервисов</li><li data-t="d1.3">Инфраструктурные, платформенные и программные сервисы</li></ul>
+      </article>
+      <article class="dir reveal">
+        <svg class="dir__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="6" y="7" width="28" height="22" rx="2" stroke="#0133AD" stroke-width="1.6"/><path d="M14 33h12M20 29v4M12 14l4 4-4 4M20 22h8" stroke="#0133AD" stroke-width="1.6"/></svg>
+        <h3 class="h3" data-t="dir.g2">Информационные системы и продукты</h3>
+        <ul><li data-t="d2.1">Сопровождение и развитие информационных систем</li><li data-t="d2.2">Разработка и внедрение цифровых продуктов и платформ</li><li data-t="d2.3">Автоматизация производственных и корпоративных процессов</li></ul>
+      </article>
+      <article class="dir reveal">
+        <svg class="dir__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><ellipse cx="20" cy="10" rx="12" ry="4" stroke="#0133AD" stroke-width="1.6"/><path d="M8 10v20c0 2.2 5.4 4 12 4s12-1.8 12-4V10M8 20c0 2.2 5.4 4 12 4s12-1.8 12-4" stroke="#0133AD" stroke-width="1.6"/></svg>
+        <h3 class="h3" data-t="dir.g3">Данные и искусственный интеллект</h3>
+        <ul><li data-t="d3.1">Внедрение технологий искусственного интеллекта</li><li data-t="d3.2">Управление данными и развитие инструментов аналитики</li></ul>
+      </article>
+      <article class="dir reveal">
+        <svg class="dir__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="13" r="6" stroke="#0133AD" stroke-width="1.6"/><path d="M8 34c1.5-6.5 6.2-10 12-10s10.5 3.5 12 10" stroke="#0133AD" stroke-width="1.6"/></svg>
+        <h3 class="h3" data-t="dir.g4">Стандарты и компетенции</h3>
+        <ul><li data-t="d4.1">Единые технологические стандарты в группе компаний КМГ</li><li data-t="d4.2">Развитие внутренних IT-компетенций и технологической экспертизы</li><li data-t="d4.3">Тиражирование успешных цифровых решений в группе КМГ</li></ul>
+      </article>
+    </div>
+    <div class="dirs__foot reveal">
+      <a class="link" href="#"><span data-t="dir.more1">Каталог услуг</span> <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg></a>
+      <a class="link" href="#"><span data-t="m.structure">Организационная структура</span> <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ Проекты: разрез ═════════ -->
+<section class="sec" id="projects" aria-labelledby="proj-title">
+  <div class="wrap">
+    <div class="sec__head reveal">
+      <div>
+        <p class="eyebrow" data-t="nav.projects">Проекты</p>
+        <h2 class="h2" id="proj-title" data-t="proj.title">Цифровые продукты</h2>
+        <p class="sec__lead" data-t="proj.lead">Продукты KMG Digital работают на всех уровнях Группы — от промысла до общих данных. Выберите продукт на разрезе.</p>
+      </div>
+      <a class="link" href="#"><span data-t="proj.all">Все проекты</span> <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg></a>
+    </div>
+
+    <div class="xs reveal">
+      <div>
+        <div class="xs__map" id="xs">
+          <svg class="xs__wells" id="wells" aria-hidden="true"></svg>
+          <!-- пласты заполняются из PRODUCTS в скрипте -->
+        </div>
+        <p class="xs__hint"><i aria-hidden="true"></i><span data-t="proj.hint">Пунктир — потоки данных: продукты берут их из общего фундамента.</span></p>
+      </div>
+      <aside class="xs__card" id="xs-card" aria-live="polite">
+        <span class="xs__level" id="xs-level"></span>
+        <h3 class="xs__pname" id="xs-name"></h3>
+        <p class="xs__desc" id="xs-desc"></p>
+        <ul class="xs__tags" id="xs-tags"></ul>
+        <div class="xs__more"><a class="link" href="#"><span data-t="proj.more">Подробнее о продукте</span> <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg></a></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ Миссия и ценности ═════════ -->
+<section class="sec sec--blue" aria-labelledby="mission-title">
+  <div class="wrap">
+    <p class="eyebrow reveal" id="mission-title" data-t="mission.eyebrow">Миссия</p>
+    <p class="mission reveal" data-t="mission.text">Создавать устойчивую, безопасную и управляемую цифровую среду группы компаний КМГ, преобразуя потребности бизнеса в эффективные цифровые решения, продукты и платформы.</p>
+    <p class="eyebrow values__label reveal" data-t="values.eyebrow">Ценности</p>
+    <div class="values">
+      <div class="value reveal"><h3 class="h3" data-t="v1.t">Экспертность</h3><p data-t="v1.p">Создаём цифровую ценность для бизнеса, опираясь на профессиональные знания, практический опыт, технологические компетенции и понимание производственных процессов.</p></div>
+      <div class="value reveal"><h3 class="h3" data-t="v2.t">Ответственность за результат</h3><p data-t="v2.p">Отвечаем за качество цифровых решений и их конечный эффект для бизнеса на всех этапах жизненного цикла продукта.</p></div>
+      <div class="value reveal"><h3 class="h3" data-t="v3.t">Корпоративная культура</h3><p data-t="v3.p">Развиваем командное взаимодействие, вовлечённость, взаимное уважение, обмен знаниями, наставничество и профессиональный рост сотрудников.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ Новости ═════════ -->
+<section class="sec sec--cloud" id="news" aria-labelledby="news-title">
+  <div class="wrap">
+    <div class="sec__head reveal">
+      <div>
+        <p class="eyebrow" data-t="news.eyebrow">Пресс-центр</p>
+        <h2 class="h2" id="news-title" data-t="nav.news">Новости</h2>
+      </div>
+      <a class="link" href="#"><span data-t="news.all">Все новости</span> <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg></a>
+    </div>
+    <div class="news">
+      <a class="card card--big reveal" href="#">
+        <div class="card__cover" data-cover="0"></div>
+        <div class="card__body">
+          <div class="card__meta"><time class="num" datetime="2026-10-08">08.10.2026</time><span data-t="n1.cat">События</span></div>
+          <h3 class="card__title" data-t="n1.t">KMG Digital представила цифровые продукты группы КМГ на выставке KIOGE</h3>
+          <p class="card__text" data-t="n1.p">На стенде показали GeoAI, AI HSE и платформу данных Группы.</p>
+        </div>
+      </a>
+      <a class="card reveal" href="#">
+        <div class="card__cover" data-cover="1"></div>
+        <div class="card__body">
+          <div class="card__meta"><time class="num" datetime="2026-10-01">01.10.2026</time><span data-t="nav.projects">Проекты</span></div>
+          <h3 class="card__title" data-t="n2.t">Платформа AI HSE внедряется в дочерних организациях КМГ</h3>
+          <p class="card__text" data-t="n2.p">Наблюдения, наряды-допуски и расследования — в одной системе.</p>
+        </div>
+      </a>
+      <a class="card reveal" href="#">
+        <div class="card__cover" data-cover="2"></div>
+        <div class="card__body">
+          <div class="card__meta"><time class="num" datetime="2026-09-24">24.09.2026</time><span data-t="n3.cat">Компания</span></div>
+          <h3 class="card__title" data-t="n3.t">Утверждён новый фирменный стиль KMG Digital</h3>
+          <p class="card__text" data-t="n3.p">Логотип, цвета и шрифты для всех материалов компании.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ Партнёрам ═════════ -->
+<section class="sec" id="partners" aria-labelledby="part-title">
+  <div class="wrap">
+    <div class="sec__head reveal">
+      <div>
+        <p class="eyebrow" data-t="part.eyebrow">Раскрытие информации</p>
+        <h2 class="h2" id="part-title" data-t="part.title">Партнёрам и поставщикам</h2>
+      </div>
+    </div>
+    <div class="tiles reveal">
+      <a class="tile" href="#"><div><h3 class="h3" data-t="nav.proc">Закупки</h3><p class="tile__text" data-t="t1.p">Объявления, планы закупок и порядок участия</p></div><span class="tile__go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></span></a>
+      <a class="tile" href="#"><div><h3 class="h3" data-t="m.docs">Корпоративные документы</h3><p class="tile__text" data-t="t2.p">Устав, положения и внутренние политики</p></div><span class="tile__go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></span></a>
+      <a class="tile" href="#"><div><h3 class="h3" data-t="m.reports">Отчётность</h3><p class="tile__text" data-t="t3.p">Годовые отчёты и финансовая отчётность</p></div><span class="tile__go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></span></a>
+      <a class="tile" href="#"><div><h3 class="h3" data-t="m.compliance">Служба комплаенс</h3><p class="tile__text" data-t="t4.p">Сообщить о нарушении, в том числе анонимно</p></div><span class="tile__go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></span></a>
+      <a class="tile" href="#"><div><h3 class="h3" data-t="m.anticor">Антикоррупционная деятельность</h3><p class="tile__text" data-t="t5.p">Политика и меры противодействия коррупции</p></div><span class="tile__go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></span></a>
+      <a class="tile" href="#"><div><h3 class="h3" data-t="m.requisites">Реквизиты</h3><p class="tile__text" data-t="t6.p">БИН, банковские реквизиты и юридический адрес</p></div><span class="tile__go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═════════ Подвал ═════════ -->
+<footer class="ftr" id="contacts">
+  <div class="wrap">
+    <div class="ftr__top">
+      <div>
+        <div class="ftr__logos">
+          <img src="assets/kmg_white.svg" alt="АО «НК «КазМунайГаз»" width="140" height="42">
+          <i></i>
+          <img src="assets/kmg_digital_white.svg" alt="KMG Digital" width="82" height="40">
+        </div>
+        <p class="ftr__owner" data-t="ftr.owner">Единственный участник — АО&nbsp;«Национальная компания «КазМунайГаз»</p>
+      </div>
+      <div class="ftr__cols">
+        <div><h4 data-t="nav.about">О нас</h4>
+          <ul><li><a href="#company" data-t="m.activity">Деятельность</a></li><li><a href="#" data-t="m.leaders">Руководство</a></li><li><a href="#" data-t="m.structure">Организационная структура</a></li><li><a href="#" data-t="m.awards">Достижения и награды</a></li><li><a href="#" data-t="m.brand">Новый фирменный стиль</a></li></ul></div>
+        <div><h4 data-t="ftr.gov">Управление</h4>
+          <ul><li><a href="#" data-t="m.docs">Корпоративные документы</a></li><li><a href="#" data-t="m.reports">Отчётность</a></li><li><a href="#" data-t="m.compliance">Служба комплаенс</a></li><li><a href="#" data-t="m.anticor">Антикоррупционная деятельность</a></li></ul></div>
+        <div><h4 data-t="ftr.sections">Разделы</h4>
+          <ul><li><a href="#projects" data-t="nav.projects">Проекты</a></li><li><a href="#partners" data-t="nav.proc">Закупки</a></li><li><a href="#news" data-t="nav.news">Новости</a></li><li><a href="#" data-t="m.requisites">Реквизиты</a></li><li><a href="https://digital.kmg.kz/" target="_blank" rel="noopener" data-t="nav.twin">Цифровой двойник</a></li></ul></div>
+      </div>
+      <address>
+        <h4 data-t="nav.contacts">Контакты</h4>
+        <p data-t="ftr.addr">г. Астана, Есильский район,<br>БЦ «Изумрудный квартал», блок Б</p>
+        <p><a href="#" class="tbd num">+7 (7172) 00-00-00</a><br><a href="#" class="tbd">info@kmg-digital.kz</a></p>
+        <div class="ftr__social">
+          <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 9h3v10H5zM6.5 4.5a1.75 1.75 0 110 3.5 1.75 1.75 0 010-3.5zM10 9h2.9v1.4c.4-.8 1.4-1.6 3-1.6 3.1 0 3.6 2 3.6 4.6V19h-3v-4.9c0-1.2 0-2.6-1.6-2.6s-1.9 1.2-1.9 2.5V19h-3z"/></svg></a>
+          <a href="#" aria-label="Telegram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 4L3 11l6 2 2 6 3-4 5 4 2-15z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 13l8-6" stroke="currentColor" stroke-width="1.6"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" stroke="currentColor" stroke-width="1.6"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor"/></svg></a>
+        </div>
+        <button class="reader" id="reader" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12" stroke="currentColor" stroke-width="1.6"/></svg><span data-t="ftr.reader">Экранный диктор</span></button>
+      </address>
+    </div>
+    <div class="ftr__bot">
+      <span data-t="ftr.copy">© 2026 ТОО «KMG Digital»</span>
+      <nav data-t-aria="ftr.service" aria-label="Служебные ссылки"><a href="#" data-t="ftr.privacy">Политика конфиденциальности</a><a href="#" data-t="ftr.sitemap">Карта сайта</a></nav>
+    </div>
+  </div>
+</footer>
+
+<!-- Панель макета: сравнить шрифт заголовков с брендбуком -->
+<div class="review" role="group" aria-label="Шрифт заголовков (макет)">
+  <span>Макет · заголовки</span>
+  <button data-font="geologica" aria-pressed="true">Geologica</button>
+  <button data-font="brand" aria-pressed="false">Montserrat</button>
+</div>
+
+<script>
+/* ════════ Тексты на казахском и английском. Русский берётся из разметки. ════════ */
+const I18N = {
+kk: {
+  'meta.title':'KMG Digital — ҚМГ компаниялар тобының IT-қызметтері',
+  'skip':'Мазмұнға өту','nav.label':'Негізгі мәзір',
+  'nav.about':'Біз туралы','nav.projects':'Жобалар','nav.gov':'Корпоративтік басқару','nav.proc':'Сатып алу','nav.news':'Жаңалықтар','nav.contacts':'Байланыс','nav.twin':'Цифрлық егіз',
+  'mega.about.title':'ҚМГ компаниялар тобының IT-қызметтер бойынша ортақ қызмет көрсету орталығы',
+  'mega.about.text':'Компанияның қызметі, басшылығы, құрылымы және даму жоспарлары.',
+  'm.activity':'Қызметі','m.services':'Көрсетілетін қызметтер','m.owner':'Жалғыз қатысушы','m.leaders':'Басшылық','m.structure':'Ұйымдық құрылым','m.plan':'Компанияның даму жоспары','m.awards':'Жетістіктер мен марапаттар','m.brand':'Жаңа фирмалық стиль',
+  'mega.gov.title':'Құжаттар, есептілік және комплаенс',
+  'mega.gov.text':'Бұзушылық туралы комплаенс қызметі арқылы, оның ішінде жасырын түрде хабарлауға болады.',
+  'm.docs':'Корпоративтік құжаттар','m.reports':'Есептілік','m.compliance':'Комплаенс қызметі','m.anticor':'Сыбайлас жемқорлыққа қарсы іс-қимыл','m.contacts':'Байланыс','m.requisites':'Деректемелер',
+  't.search':'Сайт бойынша іздеу','t.a11y':'Нашар көретіндерге арналған нұсқа','t.lang':'Сайт тілі','t.menu':'Мәзірді ашу',
+  'hero.eyebrow':'«KMG Digital» ЖШС · 2006 жылдан бері',
+  'hero.title':'ҚМГ компаниялар тобына арналған IT-қызметтер мен цифрлық шешімдер',
+  'hero.lead':'ҚазМұнайГаздың IT-қызметтер бойынша ортақ қызмет көрсету орталығы және цифрлық құзыреттер орталығы. Өндіріс пен корпоративтік процестер үшін ақпараттық жүйелерді, инфрақұрылымды және цифрлық сервистерді сүйемелдейміз.',
+  'hero.cta1':'Қызмет бағыттары',
+  'f1.k':'Қатысушы','f1.v':'«ҚазМұнайГаз» ҰК» АҚ еншілес ұйымы',
+  'f2.k':'2018 жылдан бері','f2.v':'Бүкіл ҚМГ тобы үшін IT-қызметтер бойынша ортақ қызмет көрсету орталығы',
+  'f3.k':'Бүгін','f3.v':'Сервистік орталықтан ҚМГ цифрлық экожүйесінің операторына көшу',
+  'about.eyebrow':'Компания туралы','about.title':'Біз кімбіз',
+  'about.lead':'KMG Digital ҚМГ компаниялар тобының IT-ландшафтын дамыту мен тұрақты жұмысына жауап береді — телекоммуникациялық жабдықтан бастап корпоративтік цифрлық сервистерге дейін.',
+  'about.p1':'IT-инфрақұрылымды пайдаланамыз, ақпараттық жүйелерді сүйемелдейміз, бағдарламалық өнімдер әзірлейміз, өндірістік және корпоративтік процестерді автоматтандырамыз. IT-жобаларды «кілтке дейін» іске асырамыз, бағдарламалық-аппараттық және бұлттық ресурстар ұсынамыз, автоматтандырылған жұмыс орындарын енгіземіз және аса маңызды IT-сервистердің жұмысын қамтамасыз етеміз.',
+  'about.p2':'Ақпараттық технологиялар мен инженерлік шешімдер саласында зерттеулер мен әзірлемелер жүргіземіз, пайдаланушылардың құзыреттерін дамытамыз.',
+  'about.more':'Қызметі туралы толығырақ',
+  'path.title':'Компанияның жолы',
+  'path.s1':'Серіктестік тіркелді. Компания мұнай-газ жобаларына салынған инвестицияларды басқару үшін құрылған.',
+  'path.s2':'ҚМГ-ның Жаңғырту және трансформациялау жөніндегі кеңесі серіктестік негізінде бірыңғай құзыреттер орталығын құру туралы шешім қабылдады.',
+  'path.s3':'Компания ҚМГ компаниялар тобы үшін IT-қызметтер бойынша Ортақ қызмет көрсету орталығы ретінде жұмыс істей бастады.',
+  'path.s4':'Бірыңғай технологиялық ландшафт, өнімдік тәсіл және бизнес үшін өлшенетін нәтиже беретін цифрлық шешімдер.',
+  'prio.eyebrow':'Даму жоспары','prio.title':'Даму басымдықтары','prio.lead':'Компания алдағы жылдары неге назар аударады.',
+  'prio.1':'IT-инфрақұрылымның сенімділігі мен қауіпсіздігі','prio.1t':'инфрақұрылым',
+  'prio.2':'Өндірістік және корпоративтік процестердегі жасанды интеллект','prio.2t':'ЖИ',
+  'prio.3':'Деректерге негізделген басқару','prio.3t':'деректер',
+  'prio.4':'Технологиялық тәуелсіздік','prio.4t':'платформалар',
+  'prio.5':'Меншікті кәсіби сараптама','prio.5t':'адамдар',
+  'dir.title':'Қызмет бағыттары','dir.lead':'KMG Digital ҚМГ компаниялар тобында жауап беретін он бір бағыт.',
+  'dir.g1':'Инфрақұрылым және қауіпсіздік','d1.1':'IT-инфрақұрылымды дамыту және пайдалану','d1.2':'Ақпараттық қауіпсіздік және аса маңызды IT-сервистердің тұрақтылығы','d1.3':'Инфрақұрылымдық, платформалық және бағдарламалық сервистер',
+  'dir.g2':'Ақпараттық жүйелер және өнімдер','d2.1':'Ақпараттық жүйелерді сүйемелдеу және дамыту','d2.2':'Цифрлық өнімдер мен платформаларды әзірлеу және енгізу','d2.3':'Өндірістік және корпоративтік процестерді автоматтандыру',
+  'dir.g3':'Деректер және жасанды интеллект','d3.1':'Жасанды интеллект технологияларын енгізу','d3.2':'Деректерді басқару және талдау құралдарын дамыту',
+  'dir.g4':'Стандарттар және құзыреттер','d4.1':'ҚМГ компаниялар тобындағы бірыңғай технологиялық стандарттар','d4.2':'Ішкі IT-құзыреттер мен технологиялық сараптаманы дамыту','d4.3':'Табысты цифрлық шешімдерді ҚМГ тобында тираждау',
+  'dir.more1':'Қызметтер каталогы',
+  'proj.title':'Цифрлық өнімдер',
+  'proj.lead':'KMG Digital өнімдері Топтың барлық деңгейінде жұмыс істейді — кәсіпшіліктен ортақ деректерге дейін. Қимадан өнімді таңдаңыз.',
+  'proj.all':'Барлық жобалар','proj.more':'Өнім туралы толығырақ',
+  'proj.hint':'Пунктир — деректер ағыны: өнімдер оларды ортақ іргетастан алады.',
+  'mission.eyebrow':'Миссия',
+  'mission.text':'ҚМГ компаниялар тобының орнықты, қауіпсіз және басқарылатын цифрлық ортасын құру, бизнес қажеттіліктерін тиімді цифрлық шешімдерге, өнімдер мен платформаларға айналдыру.',
+  'values.eyebrow':'Құндылықтар',
+  'v1.t':'Кәсіби сараптама','v1.p':'Кәсіби білімге, практикалық тәжірибеге, технологиялық құзыреттерге және өндірістік процестерді түсінуге сүйене отырып, бизнес үшін цифрлық құндылық жасаймыз.',
+  'v2.t':'Нәтиже үшін жауапкершілік','v2.p':'Өнімнің өмірлік циклінің барлық кезеңінде цифрлық шешімдердің сапасы мен олардың бизнеске беретін түпкілікті нәтижесі үшін жауап береміз.',
+  'v3.t':'Корпоративтік мәдениет','v3.p':'Командалық өзара іс-қимылды, тартылуды, өзара құрметті, білім алмасуды, тәлімгерлікті және қызметкерлердің кәсіби өсуін дамытамыз.',
+  'news.eyebrow':'Баспасөз орталығы','news.all':'Барлық жаңалықтар',
+  'n1.cat':'Іс-шаралар','n1.t':'KMG Digital KIOGE көрмесінде ҚМГ тобының цифрлық өнімдерін таныстырды','n1.p':'Стендте GeoAI, AI HSE және Топтың деректер платформасы көрсетілді.',
+  'n2.t':'AI HSE платформасы ҚМГ еншілес ұйымдарына енгізілуде','n2.p':'Бақылаулар, жұмысқа рұқсат-наряд және тергеулер — бір жүйеде.',
+  'n3.cat':'Компания','n3.t':'KMG Digital-тың жаңа фирмалық стилі бекітілді','n3.p':'Компанияның барлық материалдарына арналған логотип, түстер мен қаріптер.',
+  'part.eyebrow':'Ақпаратты ашу','part.title':'Серіктестер мен жеткізушілерге',
+  't1.p':'Хабарландырулар, сатып алу жоспарлары және қатысу тәртібі','t2.p':'Жарғы, ережелер және ішкі саясаттар','t3.p':'Жылдық есептер және қаржылық есептілік','t4.p':'Бұзушылық туралы, оның ішінде жасырын хабарлау','t5.p':'Сыбайлас жемқорлыққа қарсы саясат және шаралар','t6.p':'БСН, банк деректемелері және заңды мекенжай',
+  'ftr.owner':'Жалғыз қатысушы — «ҚазМұнайГаз» ұлттық компаниясы» АҚ','ftr.gov':'Басқару','ftr.sections':'Бөлімдер',
+  'ftr.addr':'Астана қ., Есіл ауданы,<br>«Изумрудный квартал» БО, Б блогы',
+  'ftr.reader':'Экрандық диктор','ftr.copy':'© 2026 «KMG Digital» ЖШС','ftr.privacy':'Құпиялылық саясаты','ftr.sitemap':'Сайт картасы','ftr.service':'Қызметтік сілтемелер'
+},
+en: {
+  'meta.title':'KMG Digital — IT services for the KMG group',
+  'skip':'Skip to content','nav.label':'Main menu',
+  'nav.about':'About us','nav.projects':'Projects','nav.gov':'Corporate governance','nav.proc':'Procurement','nav.news':'News','nav.contacts':'Contacts','nav.twin':'Digital Twin',
+  'mega.about.title':'Shared IT services centre of the KMG group',
+  'mega.about.text':'What we do, our leadership, structure and development plans.',
+  'm.activity':'Activities','m.services':'Services','m.owner':'Sole participant','m.leaders':'Leadership','m.structure':'Organisational structure','m.plan':'Development plan','m.awards':'Achievements and awards','m.brand':'New corporate identity',
+  'mega.gov.title':'Documents, reporting and compliance',
+  'mega.gov.text':'You can report a violation to the compliance service, including anonymously.',
+  'm.docs':'Corporate documents','m.reports':'Reporting','m.compliance':'Compliance service','m.anticor':'Anti-corruption','m.contacts':'Contacts','m.requisites':'Company details',
+  't.search':'Search the site','t.a11y':'Low-vision version','t.lang':'Site language','t.menu':'Open menu',
+  'hero.eyebrow':'KMG Digital LLP · since 2006',
+  'hero.title':'IT services and digital solutions for the KMG group',
+  'hero.lead':'The shared IT services centre and digital competence centre of KazMunayGas. We support information systems, infrastructure and digital services for operations and corporate processes.',
+  'hero.cta1':'What we do',
+  'f1.k':'Participant','f1.v':'A subsidiary of NC KazMunayGas JSC',
+  'f2.k':'Since 2018','f2.v':'Shared IT services centre for the entire KMG group',
+  'f3.k':'Today','f3.v':'Moving from a service centre to the operator of KMG’s digital ecosystem',
+  'about.eyebrow':'About the company','about.title':'Who we are',
+  'about.lead':'KMG Digital develops and runs the IT landscape of the KMG group — from telecom equipment to corporate digital services.',
+  'about.p1':'We operate IT infrastructure, support information systems, develop software and automate operational and corporate processes. We deliver turnkey IT projects, provide hardware, software and cloud resources, roll out automated workstations and keep mission-critical IT services running.',
+  'about.p2':'We carry out research and development in information technology and engineering, and build our users’ skills.',
+  'about.more':'More about our activities',
+  'path.title':'Our history',
+  'path.s1':'The partnership is registered. The company was set up to manage investments in oil and gas projects.',
+  'path.s2':'KMG’s Modernisation and Transformation Council decides to build a single competence centre on the basis of the partnership.',
+  'path.s3':'The company starts operating as the Shared IT Services Centre for the KMG group.',
+  'path.s4':'A unified technology landscape, a product approach and digital solutions with measurable business impact.',
+  'prio.eyebrow':'Development plan','prio.title':'Development priorities','prio.lead':'What the company is focusing on in the coming years.',
+  'prio.1':'Reliable and secure IT infrastructure','prio.1t':'infrastructure',
+  'prio.2':'Artificial intelligence in operational and corporate processes','prio.2t':'AI',
+  'prio.3':'Data-driven management','prio.3t':'data',
+  'prio.4':'Technological independence','prio.4t':'platforms',
+  'prio.5':'In-house professional expertise','prio.5t':'people',
+  'dir.title':'Areas of activity','dir.lead':'Eleven areas KMG Digital is responsible for across the KMG group.',
+  'dir.g1':'Infrastructure and security','d1.1':'Developing and operating IT infrastructure','d1.2':'Information security and resilience of mission-critical IT services','d1.3':'Infrastructure, platform and software services',
+  'dir.g2':'Information systems and products','d2.1':'Supporting and developing information systems','d2.2':'Building and rolling out digital products and platforms','d2.3':'Automating operational and corporate processes',
+  'dir.g3':'Data and artificial intelligence','d3.1':'Implementing artificial intelligence','d3.2':'Data management and analytics tools',
+  'dir.g4':'Standards and expertise','d4.1':'Common technology standards across the KMG group','d4.2':'Building in-house IT skills and technology expertise','d4.3':'Scaling proven digital solutions across the KMG group',
+  'dir.more1':'Service catalogue',
+  'proj.title':'Digital products',
+  'proj.lead':'KMG Digital products work at every level of the Group — from the field to shared data. Pick a product on the cross-section.',
+  'proj.all':'All projects','proj.more':'About the product',
+  'proj.hint':'Dashed lines are data flows: products draw on the shared foundation.',
+  'mission.eyebrow':'Mission',
+  'mission.text':'To create a sustainable, secure and well-governed digital environment for the KMG group, turning business needs into effective digital solutions, products and platforms.',
+  'values.eyebrow':'Values',
+  'v1.t':'Expertise','v1.p':'We create digital value for the business, drawing on professional knowledge, hands-on experience, technology skills and an understanding of operations.',
+  'v2.t':'Accountability for results','v2.p':'We answer for the quality of our digital solutions and their end impact on the business at every stage of the product life cycle.',
+  'v3.t':'Corporate culture','v3.p':'We foster teamwork, engagement, mutual respect, knowledge sharing, mentoring and professional growth.',
+  'news.eyebrow':'Press centre','news.all':'All news',
+  'n1.cat':'Events','n1.t':'KMG Digital showcased KMG group digital products at KIOGE','n1.p':'The stand featured GeoAI, AI HSE and the Group data platform.',
+  'n2.t':'AI HSE platform is being rolled out across KMG subsidiaries','n2.p':'Observations, work permits and investigations in one system.',
+  'n3.cat':'Company','n3.t':'KMG Digital adopts a new corporate identity','n3.p':'Logo, colours and typefaces for all company materials.',
+  'part.eyebrow':'Disclosure','part.title':'For partners and suppliers',
+  't1.p':'Notices, procurement plans and how to take part','t2.p':'Charter, regulations and internal policies','t3.p':'Annual reports and financial statements','t4.p':'Report a violation, anonymously if you wish','t5.p':'Anti-corruption policy and measures','t6.p':'BIN, bank details and legal address',
+  'ftr.owner':'Sole participant: National Company KazMunayGas JSC','ftr.gov':'Governance','ftr.sections':'Sections',
+  'ftr.addr':'Astana, Yesil district,<br>Izumrudny Kvartal business centre, block B',
+  'ftr.reader':'Screen reader','ftr.copy':'© 2026 KMG Digital LLP','ftr.privacy':'Privacy policy','ftr.sitemap':'Sitemap','ftr.service':'Service links'
+}};
+
+/* ════════ Продукты для разреза ════════ */
+const LAYERS = {
+  prod:{ru:['Производство','Промысел, безопасность, транспорт'], kk:['Өндіріс','Кәсіпшілік, қауіпсіздік, көлік'], en:['Operations','Field, safety, transport']},
+  mgmt:{ru:['Управление и офис','Закупки, отчётность, документы'], kk:['Басқару және кеңсе','Сатып алу, есептілік, құжаттар'], en:['Management and office','Procurement, reporting, documents']},
+  data:{ru:['Фундамент данных','Общие данные для всех продуктов'], kk:['Деректер іргетасы','Барлық өнімдерге ортақ деректер'], en:['Data foundation','Shared data for every product']}
+};
+const LEVEL_WORD = {ru:'Уровень', kk:'Деңгей', en:'Level'};
+const PRODUCTS = [
+ {id:'geoai', layer:'prod', name:'GeoAI',
+  ru:['ИИ-ассистент геолога. Отвечает на вопросы по архиву геологических отчётов со ссылкой на документ и страницу; данные не покидают контур компании.',['ИИ','геология','закрытый контур']],
+  kk:['Геологқа арналған ЖИ-көмекші. Геологиялық есептер мұрағаты бойынша сұрақтарға құжат пен бетке сілтеме бере отырып жауап береді; деректер компания контурынан шықпайды.',['ЖИ','геология','жабық контур']],
+  en:['AI assistant for geologists. Answers questions on the archive of geological reports with a reference to the document and page; data never leaves the company perimeter.',['AI','geology','closed perimeter']]},
+ {id:'hse', layer:'prod', name:'AI HSE',
+  ru:['Единая платформа охраны труда, промышленной и экологической безопасности с прогнозом рисков: наблюдения, наряды-допуски, расследования, аудиты.',['безопасность','ИИ']],
+  kk:['Тәуекелдерді болжайтын еңбекті қорғау, өнеркәсіптік және экологиялық қауіпсіздіктің бірыңғай платформасы: бақылаулар, рұқсат-наряд, тергеу, аудит.',['қауіпсіздік','ЖИ']],
+  en:['A single platform for occupational, industrial and environmental safety with risk forecasting: observations, work permits, investigations, audits.',['safety','AI']]},
+ {id:'routing', layer:'prod', name:'Smart Routing',
+  ru:['Планирование, диспетчеризация и мониторинг автопарка в реальном времени с ИИ-маршрутизацией.',['транспорт','ИИ']],
+  kk:['ЖИ арқылы маршруттау мүмкіндігі бар автопаркті нақты уақытта жоспарлау, диспетчерлеу және бақылау.',['көлік','ЖИ']],
+  en:['Real-time fleet planning, dispatching and monitoring with AI routing.',['transport','AI']]},
+ {id:'speed', layer:'prod', name:'Speed Monitoring',
+  ru:['Подтверждает выполнение заявок по GPS, находит нарушения скоростного режима и распределяет технику.',['транспорт','GPS']],
+  kk:['Өтінімдердің орындалуын GPS бойынша растайды, жылдамдық режимінің бұзылуын анықтайды және техниканы бөледі.',['көлік','GPS']],
+  en:['Confirms job completion via GPS, detects speeding and allocates vehicles.',['transport','GPS']]},
+ {id:'broker', layer:'mgmt', name:'AI Broker',
+  ru:['Находит совпадения между планами закупок одних компаний Группы и складскими остатками других — и доводит их до сделки.',['закупки','ИИ']],
+  kk:['Топтың бір компанияларының сатып алу жоспарлары мен басқаларының қоймадағы қалдықтары арасындағы сәйкестікті тауып, мәмілеге дейін жеткізеді.',['сатып алу','ЖИ']],
+  en:['Matches procurement plans of some Group companies with warehouse stock held by others — and takes the match through to a deal.',['procurement','AI']]},
+ {id:'kmgdata', layer:'mgmt', name:'KMG Data',
+  ru:['Одна версия данных для всех уровней управления — от Совета директоров и Правления до профильных блоков.',['отчётность','данные']],
+  kk:['Директорлар кеңесі мен Басқармадан бастап бейінді блоктарға дейін басқарудың барлық деңгейіне арналған деректердің бір нұсқасы.',['есептілік','деректер']],
+  en:['One version of data for every level of management — from the Board of Directors and Management Board to functional units.',['reporting','data']]},
+ {id:'dataai', layer:'mgmt', name:'KMG Data AI',
+  ru:['ИИ-агенты по корпоративным данным: вопрос обычными словами превращается в запрос к витринам хранилища.',['ИИ','данные']],
+  kk:['Корпоративтік деректер бойынша ЖИ-агенттер: қарапайым сөзбен қойылған сұрақ деректер қоймасының витриналарына сұранысқа айналады.',['ЖИ','деректер']],
+  en:['AI agents for corporate data: a plain-language question becomes a query to the data warehouse marts.',['AI','data']]},
+ {id:'cowork', layer:'mgmt', name:'KMG Cowork',
+  ru:['Рабочее место на генеративном ИИ: задача ставится обычными словами, результат — готовый документ.',['ИИ','документы']],
+  kk:['Генеративтік ЖИ негізіндегі жұмыс орны: тапсырма қарапайым сөзбен беріледі, нәтижесі — дайын құжат.',['ЖИ','құжаттар']],
+  en:['A generative-AI workplace: describe the task in plain words and get a finished document.',['AI','documents']]},
+ {id:'plane', layer:'mgmt', name:'KMG Plane',
+  ru:['Корпоративная база знаний внутри периметра на доработанном open-source Plane.',['знания','open source']],
+  kk:['Периметр ішіндегі, жетілдірілген open-source Plane негізіндегі корпоративтік білім қоры.',['білім','open source']],
+  en:['A corporate knowledge base inside the perimeter, built on an enhanced open-source Plane.',['knowledge','open source']]},
+ {id:'lakehouse', layer:'data', name:'Data Lakehouse',
+  ru:['Целевая платформа данных Группы: надёжность корпоративного хранилища и гибкость озера данных в одном контуре.',['платформа данных']],
+  kk:['Топтың мақсатты деректер платформасы: корпоративтік қойманың сенімділігі мен деректер көлінің икемділігі бір контурда.',['деректер платформасы']],
+  en:['The Group’s target data platform: the reliability of a corporate warehouse and the flexibility of a data lake in one perimeter.',['data platform']]},
+ {id:'nsi', layer:'data', name:{ru:'АСУ НСИ', kk:'АСУ НСИ', en:'Master Data (MDM)'},
+  ru:['Система мастер-данных Группы: один эталон, из которого все системы берут одну и ту же запись.',['мастер-данные']],
+  kk:['Топтың мастер-деректер жүйесі: барлық жүйелер бір жазбаны алатын бірыңғай эталон.',['мастер-деректер']],
+  en:['The Group’s master data system: one golden record that every system draws from.',['master data']]},
+ {id:'governance', layer:'data', name:'Data Governance',
+  ru:['Каталог, происхождение и качество данных на платформе OpenMetadata.',['каталог','качество данных']],
+  kk:['OpenMetadata платформасындағы деректер каталогы, шығу тегі және сапасы.',['каталог','деректер сапасы']],
+  en:['Data catalogue, lineage and quality on the OpenMetadata platform.',['catalogue','data quality']]}
+];
+
+let LANG = 'ru', selected = 'geoai';
+const RU = {};
+document.querySelectorAll('[data-t]').forEach(el => { RU[el.dataset.t] ??= el.innerHTML; });
+document.querySelectorAll('[data-t-aria]').forEach(el => { RU[el.dataset.tAria] ??= el.getAttribute('aria-label'); });
+RU['meta.title'] = document.title;
+const tr = k => (LANG === 'ru' ? RU[k] : I18N[LANG][k]) ?? RU[k];
+const pname = p => typeof p.name === 'string' ? p.name : p.name[LANG];
+
+/* ════════ Разрез ════════ */
+const xs = document.getElementById('xs'), wells = document.getElementById('wells');
+const HORIZON = 'M0 12 C 120 2, 260 20, 420 9 S 720 1, 900 12 S 1180 20, 1400 8 L1400 18 L0 18 Z';
+['prod','mgmt','data'].forEach(l => {
+  const layer = document.createElement('div');
+  layer.className = 'xs__layer xs__layer--' + l; layer.dataset.layer = l;
+  layer.innerHTML = (l === 'prod' ? '' : '<svg class="xs__horizon" viewBox="0 0 1400 18" preserveAspectRatio="none" aria-hidden="true"><path d="' + HORIZON + '" stroke-width="1.2" vector-effect="non-scaling-stroke"/></svg>')
+    + '<div class="xs__name"><b></b><span></span></div><div class="xs__items" role="group"></div>';
+  PRODUCTS.filter(p => p.layer === l).forEach(p => {
+    const b = document.createElement('button');
+    b.className = 'prod'; b.dataset.id = p.id; b.setAttribute('aria-pressed', p.id === selected);
+    b.setAttribute('aria-controls', 'xs-card');
+    b.addEventListener('click', () => {
+      select(p.id);
+      if (matchMedia('(max-width:1120px)').matches) document.getElementById('xs-card').scrollIntoView({block:'nearest', behavior:'smooth'});
+    });
+    layer.querySelector('.xs__items').appendChild(b);
+  });
+  xs.appendChild(layer);
+});
+
+function drawWells(){
+  if (getComputedStyle(wells).display === 'none') return;
+  const box = xs.getBoundingClientRect(), z = parseFloat(getComputedStyle(document.body).zoom) || 1;
+  const dataTop = (xs.querySelector('.xs__layer--data').getBoundingClientRect().top - box.top) / z;
+  const W = box.width / z, H = box.height / z;
+  wells.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  let s = '';
+  xs.querySelectorAll('.xs__layer--prod .prod, .xs__layer--mgmt .prod').forEach(b => {
+    const r = b.getBoundingClientRect(), x = ((r.left + r.width / 2 - box.left) / z).toFixed(1), y = ((r.bottom - box.top) / z).toFixed(1);
+    const on = b.dataset.id === selected ? ' class="is-on"' : '', y0 = (dataTop + 4).toFixed(1);
+    s += `<path${on} d="M${x} ${y0} L${x} ${y}"/><circle${on} cx="${x}" cy="${y0}" r="3.5"/>`;
+  });
+  wells.innerHTML = s;
+}
+function select(id){
+  selected = id;
+  const p = PRODUCTS.find(x => x.id === id), [desc, tags] = p[LANG];
+  xs.querySelectorAll('.prod').forEach(b => b.setAttribute('aria-pressed', b.dataset.id === id));
+  const card = document.getElementById('xs-card');
+  document.getElementById('xs-level').textContent = LEVEL_WORD[LANG] + ': ' + LAYERS[p.layer][LANG][0];
+  document.getElementById('xs-name').textContent = pname(p);
+  document.getElementById('xs-desc').textContent = desc;
+  document.getElementById('xs-tags').innerHTML = tags.map(t => '<li>' + t + '</li>').join('');
+  card.classList.remove('is-swap'); void card.offsetWidth; card.classList.add('is-swap');
+  drawWells();
+}
+new ResizeObserver(drawWells).observe(xs);
+
+/* ════════ Язык ════════ */
+const CODES = {kk:'ҚАЗ', ru:'РУС', en:'ENG'}, SPEECH = {kk:'kk-KZ', ru:'ru-RU', en:'en-US'};
+function setLang(l){
+  LANG = (l === 'kk' || l === 'en') ? l : 'ru';
+  document.documentElement.lang = LANG;
+  document.title = tr('meta.title');
+  document.querySelectorAll('[data-t]').forEach(el => { el.innerHTML = tr(el.dataset.t); });
+  document.querySelectorAll('[data-t-aria]').forEach(el => el.setAttribute('aria-label', tr(el.dataset.tAria)));
+  document.querySelectorAll('[data-lang]').forEach(b => b.setAttribute('aria-current', b.dataset.lang === LANG));
+  document.getElementById('lang-code').textContent = CODES[LANG];
+  xs.querySelectorAll('.xs__layer').forEach(layer => {
+    const [n, s] = LAYERS[layer.dataset.layer][LANG];
+    layer.querySelector('.xs__name b').textContent = n; layer.querySelector('.xs__name span').textContent = s;
+    layer.querySelector('.xs__items').setAttribute('aria-label', n);
+  });
+  xs.querySelectorAll('.prod').forEach(b => b.textContent = pname(PRODUCTS.find(p => p.id === b.dataset.id)));
+  select(selected);
+  if (window.HDR_READY) fitHeader();   // при первом вызове шапку подгонит ResizeObserver
+  try { localStorage.setItem('kmgd-lang', LANG); } catch(e){}
+  try { const u = new URL(location.href); u.searchParams.set('lang', LANG); history.replaceState(null, '', u); } catch(e){}
+}
+const langBox = document.getElementById('lang'), langBtn = langBox.querySelector('.tool');
+const setLangMenu = open => { langBox.classList.toggle('is-open', open); langBtn.setAttribute('aria-expanded', open); };
+langBtn.addEventListener('click', () => setLangMenu(!langBox.classList.contains('is-open')));
+document.addEventListener('click', e => { if (!langBox.contains(e.target)) setLangMenu(false); });
+langBox.addEventListener('keydown', e => { if (e.key === 'Escape'){ setLangMenu(false); langBtn.focus(); } });
+document.querySelectorAll('[data-lang]').forEach(b => b.addEventListener('click', () => { setLang(b.dataset.lang); setLangMenu(false); }));
+let startLang = new URLSearchParams(location.search).get('lang');
+try { startLang ||= localStorage.getItem('kmgd-lang'); } catch(e){}
+setLang(startLang || 'ru');
+
+/* ════════ Фирменный элемент: структурная карта — изолинии в форме капли логотипа ════════ */
+(function(){
+  const svg = document.getElementById('iso');
+  const NS = 'http://www.w3.org/2000/svg';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const N = 17, STEP = 25, BASE = -2150;   // сечение изолиний 25 м
+  const paths = [], labels = [];
+  function pt(t, k, ph){
+    const s = 1 - k * (0.9 / N);
+    const cx = 300 + (1 - s) * 28, cy = 392 + (1 - s) * 120;   // свод смещён: крутое и пологое крыло
+    const H = 335 * s, W = 330 * s;
+    const fade = Math.sin(t / 2);                               // у острия рябь гаснет
+    const amp = 0.02 + 0.075 * (k / N);
+    const w = 1 + amp * fade * (0.5 * Math.sin(2 * t + ph + k * .9) + 0.3 * Math.sin(3 * t - ph * 1.3 + k * .5) + 0.2 * Math.sin(5 * t + ph * .7 - k * 1.1));
+    return [cx + Math.sin(t) * fade * W * w, cy - Math.cos(t) * H * w];
+  }
+  function d(k, ph){
+    let s = '';
+    for (let i = 0; i <= 160; i++){ const p = pt(i / 160 * Math.PI * 2, k, ph); s += (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }
+    return s + 'Z';
+  }
+  for (let k = 0; k < N; k++){
+    const p = document.createElementNS(NS, 'path');
+    const index = k % 4 === 0;                                  // утолщённые «основные» изолинии
+    p.setAttribute('stroke-width', index ? 2 : 1);
+    p.setAttribute('stroke-opacity', (index ? .78 : .38) + k * .012);
+    p.style.transformOrigin = '300px 470px';
+    if (!reduce){ p.style.opacity = 0; p.style.transform = 'scale(.82)'; }
+    p.style.transition = 'opacity 1.2s ' + (0.2 + (N - k) * 0.05) + 's, transform 1.6s cubic-bezier(.16,1,.3,1) ' + (0.2 + (N - k) * 0.05) + 's';
+    svg.appendChild(p); paths.push(p);
+    if (index){
+      const t = document.createElementNS(NS, 'text');
+      t.textContent = '−' + Math.abs(BASE + k * STEP).toLocaleString('ru-RU');
+      t.style.opacity = reduce ? 1 : 0; t.style.transition = 'opacity .8s ' + (1 + k * 0.06) + 's';
+      svg.appendChild(t); labels.push([t, k]);
+    }
+  }
+  const well = document.createElementNS(NS, 'circle');
+  well.setAttribute('class', 'well'); well.setAttribute('r', 4.5);
+  well.style.opacity = reduce ? 1 : 0; well.style.transition = 'opacity .6s 2s';
+  svg.append(well);
+  function draw(ph){
+    paths.forEach((p, k) => p.setAttribute('d', d(k, ph)));
+    labels.forEach(([t, k], j) => {
+      const right = j % 2 === 0, p = pt(right ? 1.7 + j * .12 : Math.PI * 2 - 1.9 - j * .1, k, ph);
+      t.setAttribute('x', p[0] + (right ? 8 : -8)); t.setAttribute('y', p[1] + 4); t.setAttribute('text-anchor', right ? 'start' : 'end');
+    });
+    const c = pt(Math.PI, N - 1, ph), top = pt(0, N - 1, ph);
+    well.setAttribute('cx', c[0]); well.setAttribute('cy', (c[1] + top[1]) / 2 + 30);
+  }
+  draw(0);
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    paths.forEach(p => { p.style.opacity = 1; p.style.transform = 'none'; });
+    labels.forEach(([t]) => t.style.opacity = 1); well.style.opacity = 1;
+  }));
+  if (!reduce){
+    let ph = 0, last = performance.now(), vis = true;
+    new IntersectionObserver(e => vis = e[0].isIntersecting).observe(svg);
+    (function loop(now){
+      if (vis && !document.documentElement.classList.contains('a11y')){ ph += (now - last) * 0.00012; draw(ph); }
+      last = now; requestAnimationFrame(loop);
+    })(last);
+  }
+  // обложки новостей — фрагменты той же карты
+  const covers = [{vb:'40 330 520 293', bg:'#0133AD', st:'#fff'}, {vb:'190 400 270 152', bg:'#0A1636', st:'#8FB0FF'}, {vb:'-340 10 1280 720', bg:'#E3E1DA', st:'#0133AD'}];
+  document.querySelectorAll('[data-cover]').forEach(el => {
+    const c = covers[+el.dataset.cover]; el.style.background = c.bg;
+    let s = '<svg viewBox="' + c.vb + '" preserveAspectRatio="xMidYMid slice" aria-hidden="true">';
+    for (let k = 0; k < N; k++) s += '<path d="' + d(k, 1.7 + +el.dataset.cover) + '" fill="none" stroke="' + c.st + '" stroke-opacity="' + (k % 4 ? .3 : .7) + '" stroke-width="' + (k % 4 ? .8 : 1.5) + '" vector-effect="non-scaling-stroke"/>';
+    el.innerHTML = s + '</svg>';
+  });
+})();
+
+/* ════════ Шапка, меню ════════ */
+const burger = document.querySelector('.burger'), drawer = document.getElementById('drawer');
+const hdr = document.getElementById('hdr'), hdrIn = hdr.querySelector('.hdr__in');
+function fitHeader(){
+  hdr.classList.remove('is-compact');
+  const edge = hdrIn.getBoundingClientRect().right - parseFloat(getComputedStyle(hdrIn).paddingRight);
+  if (hdrIn.querySelector('.tools').getBoundingClientRect().right > edge + 1) hdr.classList.add('is-compact');
+  else if (drawer.classList.contains('is-open')) burger.click();
+}
+addEventListener('scroll', () => hdr.classList.toggle('is-stuck', scrollY > 8), {passive:true});
+document.querySelectorAll('[data-menu]').forEach(item => {
+  const btn = item.querySelector('button');
+  let timer, openedAt = 0;   // клик сразу после наведения не должен закрывать меню
+  const set = open => { if (open && !item.classList.contains('is-open')) openedAt = Date.now(); item.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', open); };
+  item.addEventListener('mouseenter', () => { clearTimeout(timer); document.querySelectorAll('[data-menu].is-open').forEach(o => o !== item && o.classList.remove('is-open')); set(true); });
+  item.addEventListener('mouseleave', () => timer = setTimeout(() => set(false), 120));
+  btn.addEventListener('click', () => { if (Date.now() - openedAt > 400) set(!item.classList.contains('is-open')); });
+  item.addEventListener('focusout', e => { if (!item.contains(e.relatedTarget)) set(false); });
+  item.addEventListener('keydown', e => { if (e.key === 'Escape'){ set(false); btn.focus(); } });
+  item.querySelectorAll('.mega a').forEach(a => a.addEventListener('click', () => set(false)));
+});
+burger.addEventListener('click', () => {
+  const open = !drawer.classList.contains('is-open');
+  drawer.classList.toggle('is-open', open); burger.setAttribute('aria-expanded', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => burger.click()));
+new ResizeObserver(fitHeader).observe(hdrIn);
+window.HDR_READY = true;
+document.fonts && document.fonts.ready.then(fitHeader);
+
+/* ════════ Доступность ════════ */
+const a11y = document.querySelector('[data-a11y]');
+a11y.addEventListener('click', () => {
+  const on = document.documentElement.classList.toggle('a11y');
+  a11y.setAttribute('aria-pressed', on);
+  try { localStorage.setItem('kmgd-a11y', on ? '1' : ''); } catch(e){}
+  drawWells();
+});
+try { if (localStorage.getItem('kmgd-a11y')) a11y.click(); } catch(e){}
+document.getElementById('a11y-proxy').addEventListener('click', () => a11y.click());
+const reader = document.getElementById('reader');
+let readerOn = false;
+reader.addEventListener('click', () => { readerOn = !readerOn; reader.setAttribute('aria-pressed', readerOn); if (!readerOn) speechSynthesis.cancel(); });
+document.addEventListener('mouseup', () => {
+  if (!readerOn || !('speechSynthesis' in window)) return;
+  const text = String(getSelection()).trim(); if (!text) return;
+  speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.lang = SPEECH[LANG]; speechSynthesis.speak(u);
+});
+
+/* ════════ Панель макета: шрифт заголовков ════════ */
+document.querySelectorAll('.review button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.review button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  if (b.dataset.font === 'brand') document.documentElement.dataset.font = 'brand'; else delete document.documentElement.dataset.font;
+  setTimeout(drawWells, 50);
+}));
+document.fonts && document.fonts.ready.then(drawWells);
+
+/* ════════ Появление при прокрутке ════════ */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } }), {rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 4) * 60 + 'ms'; io.observe(el); });
+</script>
+</body>
+</html>
